@@ -11,10 +11,10 @@ Este repositorio integra `PINPON` como submódulo Git en la ruta `./pinpon` (sin
 Get-Location
 git remote -v
 
-# 2) Agregar PINPON como submódulo (una sola vez)
-git submodule add https://github.com/PINPON/PINPON.git pinpon
+# 2) (Solo maintainers) Agregar PINPON como submódulo (una sola vez)
+git submodule add https://github.com/kurtbrian03/PINPON.git pinpon
 
-# 3) Inicializar y actualizar submódulos
+# 3) Inicializar y actualizar submódulos (uso normal en dev/CI)
 git submodule update --init --recursive
 
 # 4) Confirmar configuración
