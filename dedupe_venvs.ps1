@@ -14,7 +14,7 @@
 #>
 
 param(
-    [switch]$DryRun = $true,
+    [switch]$DryRun,
     [switch]$BackupOnly,
     [switch]$Consolidate,
     [switch]$ForceDelete,
@@ -29,6 +29,15 @@ param(
     [string]$Report = "dedupe_report.txt",
     [int]$PruneDays = 7
 )
+
+# Determinar modo de operación
+$ActiveMode = $false
+if ($Consolidate -or $Auto -or $BackupOnly) {
+    $ActiveMode = $true
+}
+if (-not $DryRun -and -not $ActiveMode -and -not $ReportOnly) {
+    $DryRun = $true  # Por defecto si no se especifica nada
+}
 
 # Configuración
 $ErrorActionPreference = "Continue"
@@ -188,7 +197,7 @@ function Backup-Venv {
     $backupName = "$VenvPath-backup-$Timestamp"
     Write-Log "Creando backup: $backupName"
     
-    if (-not $DryRun) {
+    if (-not $DryRun -and -not $ReportOnly) {
         Rename-Item -Path $VenvPath -NewName $backupName
     }
     
@@ -206,7 +215,7 @@ function Install-MissingPackages {
     
     foreach ($pkg in $Packages) {
         Write-Log "Instalando: $pkg"
-        if (-not $DryRun) {
+        if (-not $DryRun -and -not $ReportOnly) {
             try {
                 & $pythonExe -m pip install "$pkg" 2>&1 | Tee-Object -Append -FilePath $Log
             } catch {

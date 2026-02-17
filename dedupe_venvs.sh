@@ -165,7 +165,7 @@ get_venv_info() {
     # Hash de paquetes
     local pkg_hash
     if [[ -f "$packages_file" ]]; then
-        pkg_hash=$(md5sum "$packages_file" 2>/dev/null | cut -d' ' -f1 || echo "none")
+        pkg_hash=$(md5sum "$packages_file" 2>/dev/null | cut -d' ' -f1 || md5 -r "$packages_file" 2>/dev/null | cut -d' ' -f1 || echo "none")
     else
         pkg_hash="none"
     fi
@@ -196,10 +196,10 @@ select_target_venv() {
     local newest=""
     local newest_time=0
     for venv in "${venvs[@]}"; do
-        local mtime
-        mtime=$(stat -c %Y "$venv" 2>/dev/null || stat -f %m "$venv" 2>/dev/null || echo 0)
-        if [[ $mtime -gt $newest_time ]]; then
-            newest_time=$mtime
+        local mod_time
+        mod_time=$(stat -c %Y "$venv" 2>/dev/null || stat -f %m "$venv" 2>/dev/null || echo 0)
+        if [[ $mod_time -gt $newest_time ]]; then
+            newest_time=$mod_time
             newest="$venv"
         fi
     done
