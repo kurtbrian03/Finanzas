@@ -18,4 +18,7 @@ if archivo is not None:
         st.dataframe(df, use_container_width=True)
         st.caption(f"Filas: {len(df)} | Columnas: {len(df.columns)}")
     except Exception as error:
-        st.error(f"No se pudo leer el archivo: {error}")
+        st.error(
+            f"No se pudo leer el archivo '{archivo.name}' "
+            f"({type(error).__name__}): {error}"
+        )
