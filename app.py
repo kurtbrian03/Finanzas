@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+from zipfile import ZipFile
+from streamlit_pdf_viewer import pdf_viewer
 
 st.set_page_config(page_title="Finanzas App", page_icon="💰", layout="centered")
 
@@ -40,6 +42,13 @@ def mostrar_preview(categoria: str, archivo: Path) -> None:
             st.error(f"No se pudo leer el Excel: {error}")
             return
 
+        excel_bytes = archivo.read_bytes()
+        st.download_button(
+            label="Descargar Excel",
+            data=excel_bytes,
+            file_name=archivo.name,
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
         st.caption(f"Filas: {len(df):,} | Columnas: {len(df.columns):,}")
         st.dataframe(df.head(100), use_container_width=True)
         return
@@ -53,6 +62,13 @@ def mostrar_preview(categoria: str, archivo: Path) -> None:
             st.error(f"No se pudo leer el TXT: {error}")
             return
 
+        txt_bytes = archivo.read_bytes()
+        st.download_button(
+            label="Descargar TXT",
+            data=txt_bytes,
+            file_name=archivo.name,
+            mime="text/plain",
+        )
         st.text_area("Contenido", contenido, height=350)
         return
 
@@ -66,6 +82,13 @@ def mostrar_preview(categoria: str, archivo: Path) -> None:
             st.error(f"No se pudo leer el archivo de código: {error}")
             return
 
+        codigo_bytes = archivo.read_bytes()
+        st.download_button(
+            label=f"Descargar {categoria}",
+            data=codigo_bytes,
+            file_name=archivo.name,
+            mime="text/plain",
+        )
         st.code(contenido, language=lenguaje)
         return
 
@@ -82,7 +105,12 @@ def mostrar_preview(categoria: str, archivo: Path) -> None:
             file_name=archivo.name,
             mime="application/pdf",
         )
-        st.info("Vista previa directa de PDF no habilitada; usa Descargar PDF.")
+        pdf_viewer(
+            input=pdf_bytes,
+            width="100%",
+            render_text=True,
+            pages_vertical_spacing=2,
+        )
         return
 
     if categoria == "ZIPPED":
@@ -98,7 +126,19 @@ def mostrar_preview(categoria: str, archivo: Path) -> None:
             file_name=archivo.name,
             mime="application/zip",
         )
-        st.info("Archivo comprimido listo para descarga.")
+
+        try:
+            with ZipFile(archivo, "r") as zip_file:
+                contenido_zip = zip_file.namelist()
+        except Exception as error:
+            st.error(f"No se pudo leer el contenido del ZIP: {error}")
+            return
+
+        if contenido_zip:
+            st.write("Contenido del ZIP:")
+            st.dataframe(pd.DataFrame({"archivo": contenido_zip}), use_container_width=True)
+        else:
+            st.info("El archivo ZIP está vacío.")
 
 
 nombre = st.text_input("Escribe tu nombre")
