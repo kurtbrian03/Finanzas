@@ -42,3 +42,17 @@ pwsh ./pinpon/<script>.ps1
 ```
 
 > Nota: no se incluyen ni exponen credenciales reales en este repositorio.
+
+## App Streamlit: lector de CSV y Excel
+
+### Instalación
+
+```powershell
+pip install -r requirements.txt
+```
+
+### Ejecución
+
+```powershell
+streamlit run streamlit_app.py
+```
