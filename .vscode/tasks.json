@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Pinpon: Unblock Installer and Setup Agent",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "Start-Process pwsh -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\scripts\\unblock_and_setup_agent.ps1\"' -Verb RunAs -Wait"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
