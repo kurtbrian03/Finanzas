@@ -1,0 +1,7 @@
+{
+  "agentName": "pinpon-agent",
+  "environment": "local",
+  "knowledgeDir": "knowledge",
+  "actionsDir": "actions",
+  "logLevel": "info"
+}
