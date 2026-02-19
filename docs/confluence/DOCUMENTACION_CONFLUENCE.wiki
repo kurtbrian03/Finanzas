@@ -1,0 +1,13 @@
+h1. Documentación del Sistema
+Portal documental: ../INDEX_DOCUMENTACION.md
+
+SECCIÓN 8 — VERSIÓN CONFLUENCE (RESUMIDA, WIKI)
+#####################################################################
+
+h1. Documentación del Sistema  
+h2. Overview  
+h2. Arquitectura  
+h2. Estructura  
+h2. Diagramas  
+h2. Roadmap  
+h2. Manual Técnico

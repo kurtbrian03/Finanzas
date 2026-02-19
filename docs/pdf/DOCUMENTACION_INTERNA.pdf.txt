@@ -1,0 +1,117 @@
+# AUTO-GENERADO (pdf)
+# Fuente maestra: ../ARCHIVO_MAESTRO_DOCUMENTACION_OPCION_C.txt
+# Portal: ../INDEX_DOCUMENTACION.md
+
+SECCIÓN 2 — VERSIÓN PDF (COMPLETA, FORMAL, CORPORATIVA)
+#####################################################################
+
+DOCUMENTACIÓN INTERNA — VERSIÓN PDF  
+(Contenido completo para exportar desde Word/Docs/LibreOffice)
+
+Incluye:
+- Visión general  
+- Arquitectura  
+- Estructura  
+- Análisis funcional  
+- Diagramas  
+- Roadmap  
+- Manual técnico  
+- Conclusiones  
+
+
+#####################################################################
+#  SECCIÓN 3 — VERSIÓN MARKDOWN (INTERMEDIA, OPTIMIZADA PARA GITHUB)
+#####################################################################
+
+# Documentación del Sistema
+
+## 1. Overview  
+## 2. Arquitectura  
+## 3. Estructura del Proyecto  
+## 4. Diagramas  
+## 5. Roadmap  
+## 6. Manual Técnico  
+## 7. Licencia  
+
+
+#####################################################################
+#  SECCIÓN 4 — VERSIÓN HTML (INTERMEDIA, DOCUMENTACIÓN WEB)
+#####################################################################
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Documentación del Sistema</title>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial; margin: 40px; line-height: 1.6; }
+pre { background: #f4f4f4; padding: 10px; }
+</style>
+</head>
+<body>
+<h1>Documentación del Sistema</h1>
+<h2>Overview</h2>
+<h2>Arquitectura</h2>
+<h2>Estructura</h2>
+<h2>Diagramas</h2>
+<h2>Roadmap</h2>
+<h2>Manual Técnico</h2>
+</body>
+</html>
+
+
+#####################################################################
+#  SECCIÓN 5 — VERSIÓN LATEX (COMPLETA, ACADÉMICA)
+#####################################################################
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\title{Documentación del Sistema Modular}
+\author{Equipo de Desarrollo}
+\begin{document}
+\maketitle
+\section{Overview}
+\section{Arquitectura}
+\section{Estructura}
+\section{Diagramas}
+\section{Roadmap}
+\section{Manual Técnico}
+\end{document}
+
+
+#####################################################################
+#  SECCIÓN 6 — VERSIÓN EPUB (LIGERA)
+#####################################################################
+
+EPUB_CONTENT.opf  
+EPUB_TOC.ncx  
+EPUB_Text/document.xhtml  
+
+
+#####################################################################
+#  SECCIÓN 7 — VERSIÓN NOTION (RESUMIDA)
+#####################################################################
+
+NOTION_PAGE = [
+  { "type": "heading_1", "text": "Documentación del Sistema" },
+  { "type": "heading_2", "text": "Overview" },
+  { "type": "heading_2", "text": "Arquitectura" },
+  { "type": "heading_2", "text": "Estructura" },
+  { "type": "heading_2", "text": "Diagramas" },
+  { "type": "heading_2", "text": "Roadmap" },
+  { "type": "heading_2", "text": "Manual Técnico" }
+]
+
+
+#####################################################################
+#  SECCIÓN 8 — VERSIÓN CONFLUENCE (RESUMIDA, WIKI)
+#####################################################################
+
+h1. Documentación del Sistema  
+h2. Overview  
+h2. Arquitectura  
+h2. Estructura  
+h2. Diagramas  
+h2. Roadmap  
+h2. Manual Técnico

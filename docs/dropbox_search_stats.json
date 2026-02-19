@@ -1,0 +1,49 @@
+{
+  "terminos_mas_buscados": {
+    "resultados": 7
+  },
+  "tipos_mas_encontrados": {
+    "PDF": 4,
+    "Imagen": 3
+  },
+  "carpetas_mas_relevantes": {
+    "PDF": 7
+  },
+  "historial": [
+    {
+      "query": "resultados",
+      "tipo_top": "Imagen",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "Imagen",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "Imagen",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "PDF",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "PDF",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "PDF",
+      "carpeta_top": "PDF"
+    },
+    {
+      "query": "resultados",
+      "tipo_top": "PDF",
+      "carpeta_top": "PDF"
+    }
+  ]
+}

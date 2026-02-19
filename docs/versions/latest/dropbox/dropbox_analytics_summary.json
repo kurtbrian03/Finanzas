@@ -1,0 +1,63 @@
+{
+  "total_archivos": 768,
+  "total_bytes": 72350524,
+  "tipos": {
+    "EXCEL": 9,
+    "IMAGEN": 236,
+    "PDF": 519,
+    "TEXTO": 1,
+    "ZIP": 3
+  },
+  "extensiones": {
+    ".pdf": 519,
+    ".jpg": 236,
+    ".xlsx": 9,
+    ".zip": 3,
+    ".txt": 1
+  },
+  "carpetas": {
+    "EXCEL": 8,
+    "JPG": 107,
+    "PDF": 649,
+    "TEXTO": 1,
+    "ZIPPED": 3
+  },
+  "pdf_paginas": 756,
+  "excel_hojas": 41,
+  "imagenes_logo_probable": 43,
+  "texto_palabras": 14562,
+  "zip_entradas": 4,
+  "errores": [],
+  "arbol_virtual": {
+    "total_archivos": 768,
+    "proveedores_top": {
+      "Users": 768
+    },
+    "hospitales_top": {
+      "SIN_HOSPITAL": 658,
+      "Pendiente 001.jpg": 23,
+      "Pendiente 002.jpg": 19,
+      "Pendiente 003.jpg": 5,
+      "8 HOSPITAL MAXIMILIANO RUIZ CASTAÑEDA": 4,
+      "Pendiente 004.jpg": 2,
+      "Hospital Regional Toluca": 2,
+      "9 HOSPITAL GENERAL IXTLAHUACA VALENTIN GOMES FARIAS": 2,
+      "RUIZ RANGEL GUILLERMINA FFAC0000000456.pdf": 1,
+      "CamScanner 31 07 2025 08.58.pdf": 1
+    },
+    "meses_top": {
+      "12": 67,
+      "11": 65,
+      "07": 61,
+      "SIN_MES": 60,
+      "03": 60,
+      "01-Enero": 59,
+      "01": 57,
+      "08": 56,
+      "04": 51,
+      "09": 51,
+      "05": 51,
+      "06": 49
+    }
+  }
+}

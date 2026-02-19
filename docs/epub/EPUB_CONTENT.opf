@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>Documentación del Sistema</dc:title>
+    <dc:language>es</dc:language>
+    <dc:identifier id="BookId">finanzas-docs-epub</dc:identifier>
+    <dc:source>../INDEX_DOCUMENTACION.md</dc:source>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="EPUB_TOC.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="doc" href="EPUB_Text/document.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="doc"/>
+  </spine>
+</package>

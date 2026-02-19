@@ -1,0 +1,18 @@
+{
+  "reportes": {
+    "txt": "C:\\Users\\danie\\OneDrive\\Escaneos\\Documentos de excel\\GitHub\\Finanzas\\docs\\reportes\\dropbox_analytics_20260219_010203.txt",
+    "excel": "C:\\Users\\danie\\OneDrive\\Escaneos\\Documentos de excel\\GitHub\\Finanzas\\docs\\reportes\\dropbox_analytics_20260219_010203.xlsx",
+    "pdf": "C:\\Users\\danie\\OneDrive\\Escaneos\\Documentos de excel\\GitHub\\Finanzas\\docs\\reportes\\dropbox_analytics_20260219_010203.pdf",
+    "zip": "C:\\Users\\danie\\OneDrive\\Escaneos\\Documentos de excel\\GitHub\\Finanzas\\docs\\reportes\\dropbox_analytics_20260219_010203.zip"
+  },
+  "facturas_receptor": {
+    "artifact": "C:\\Users\\danie\\OneDrive\\Escaneos\\Documentos de excel\\GitHub\\Finanzas\\docs\\dropbox_invoices_by_receptor.json",
+    "total_facturas": 508
+  },
+  "estructura_dropbox": {
+    "valid": true,
+    "missing": [],
+    "created": 0,
+    "enforced": false
+  }
+}

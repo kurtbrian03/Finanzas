@@ -1,0 +1,293 @@
+=====================================================================
+= 5 PROMPTS MAESTROS — SISTEMA DOCUMENTAL COMPLETO DEL PROYECTO     =
+= README • PORTAL • AUTOMATIZACIÓN • VERSIONADO • CHANGELOG         =
+= VERSIÓN EXTENDIDA, DETALLADA Y PROFESIONAL                        =
+=====================================================================
+
+Este paquete contiene los 5 prompts fundamentales que gobiernan la 
+generación, mantenimiento y evolución del ecosistema documental del 
+proyecto. Cada prompt está diseñado para ser usado por agentes de IA 
+(Copilot, VS Code, Chat) o por desarrolladores humanos que necesiten 
+crear documentación con estándares profesionales tipo Microsoft Docs.
+
+Cada prompt está enriquecido con contexto, propósito, estructura y 
+criterios de calidad para asegurar resultados consistentes, claros y 
+de nivel empresarial.
+
+
+#####################################################################
+# 1) PROMPT MAESTRO — README ESTILO MICROSOFT DOCS
+#####################################################################
+
+Genera un README principal con estilo profesional tipo Microsoft Docs.  
+Debe ser elegante, claro, corporativo y altamente navegable.
+
+El README debe incluir:
+
+1. **Título corporativo**  
+   - Nombre del proyecto  
+   - Subtítulo descriptivo  
+   - Breve tagline profesional  
+
+2. **Descripción general del proyecto**  
+   - Qué es  
+   - Qué resuelve  
+   - A quién sirve  
+   - Por qué existe  
+
+3. **Arquitectura del sistema**  
+   - Explicación de capas  
+   - Módulos principales  
+   - Flujo general  
+   - Diagrama ASCII opcional  
+
+4. **Características principales**  
+   - Listado claro y conciso  
+   - Beneficios técnicos  
+   - Capacidades clave  
+
+5. **Enlace destacado al portal documental**  
+   - Botón o badge  
+   - Texto claro de navegación  
+
+6. **Estructura del proyecto**  
+   - Árbol de carpetas  
+   - Explicación de cada directorio  
+
+7. **Cómo iniciar el proyecto**  
+   - Requisitos  
+   - Instalación  
+   - Ejecución  
+   - Comandos  
+
+8. **Cómo contribuir**  
+   - Estándares  
+   - Pull requests  
+   - Estilo de código  
+
+9. **Licencia**  
+   - Tipo  
+   - Enlace  
+
+10. **Contacto o equipo**  
+    - Autor  
+    - Mantenimiento  
+    - Soporte  
+
+11. **Badges profesionales**  
+    - Portal documental  
+    - Versión estable  
+    - Automatización  
+    - Changelog  
+    - Licencia  
+
+El tono debe ser:
+
+- Corporativo  
+- Claro  
+- Conciso  
+- Profesional  
+- Inspirado en Microsoft Docs  
+
+El README debe ser impecable, limpio y con secciones bien definidas.
+
+
+#####################################################################
+# 2) PROMPT MAESTRO — PORTAL DE DOCUMENTACIÓN AVANZADO
+#####################################################################
+
+Genera un archivo INDEX_DOCUMENTACION.md que funcione como **portal 
+documental avanzado**, con navegación estilo Microsoft Docs.
+
+Debe incluir:
+
+1. **Introducción al ecosistema documental**  
+   - Propósito  
+   - Alcance  
+   - Filosofía documental  
+
+2. **Enlaces a las versiones maestras**  
+   - Extendida  
+   - Opción C  
+
+3. **Enlaces a cada formato documental**  
+   - PDF  
+   - Markdown  
+   - HTML  
+   - LaTeX  
+   - EPUB  
+   - Notion  
+   - Confluence  
+
+4. **Estructura completa del directorio docs/**  
+   - Árbol de carpetas  
+   - Explicación de cada subcarpeta  
+
+5. **Explicación del propósito de cada archivo**  
+   - Qué hace  
+   - Para qué sirve  
+   - Quién debe usarlo  
+
+6. **Sección de automatización**  
+   - Explicación del script  
+   - Cómo regenerar documentación  
+   - Flags disponibles  
+
+7. **Sección de versionado**  
+   - Cómo funciona  
+   - Reglas  
+   - Estructura  
+
+8. **Sección de changelog**  
+   - Cómo se actualiza  
+   - Cómo se lee  
+   - Cómo se integra  
+
+9. **Próximos pasos**  
+   - Mejoras sugeridas  
+   - Integración con GitHub Pages  
+   - CI/CD documental  
+
+10. **Navegación estilo Microsoft Docs**  
+    - Índice lateral conceptual  
+    - Secciones claras  
+    - Jerarquía limpia  
+
+
+#####################################################################
+# 3) PROMPT MAESTRO — SCRIPT DE AUTOMATIZACIÓN
+#####################################################################
+
+Genera un script llamado **regenerar_documentacion.py** que:
+
+1. **Lea el archivo maestro (Opción C)**  
+   - Identifique secciones  
+   - Extraiga contenido por formato  
+
+2. **Genere automáticamente los archivos en docs/**  
+   - PDF (txt base)  
+   - Markdown  
+   - HTML  
+   - LaTeX  
+   - EPUB  
+   - Notion  
+   - Confluence  
+
+3. **Mantenga consistencia entre formatos**  
+   - Validación de integridad  
+   - Comparación de hashes  
+   - Reporte de diferencias  
+
+4. **Permita regenerar todo con un solo comando**  
+   - `--target all`  
+
+5. **Permita regenerar formatos individuales**  
+   - `--target pdf`  
+   - `--target html`  
+   - `--target markdown`  
+   - etc.  
+
+6. **Incluya flags avanzados**  
+   - `--validate`  
+   - `--dry-run`  
+   - `--verbose`  
+
+7. **Registre cambios en el CHANGELOG**  
+   - Fecha  
+   - Archivos afectados  
+   - Tipo de cambio  
+
+8. **Sea idempotente**  
+   - No duplique  
+   - No sobrescriba sin control  
+   - No genere inconsistencias  
+
+9. **Incluya logs claros y profesionales**  
+   - Inicio  
+   - Progreso  
+   - Resultados  
+   - Errores  
+
+10. **Arquitectura modular**  
+    - Funciones separadas  
+    - Código limpio  
+    - Comentarios detallados  
+
+
+#####################################################################
+# 4) PROMPT MAESTRO — SISTEMA DE VERSIONADO DOCUMENTAL
+#####################################################################
+
+Genera un sistema de versionado documental dentro de **docs/versions/** 
+que:
+
+1. Cree carpetas v1/, v2/, v3/…  
+2. Cree un archivo **LATEST_VERSION.txt**  
+3. Copie las versiones maestras en cada versión  
+4. Copie los formatos generados en cada versión  
+5. Mantenga un historial claro  
+6. Permita actualizar la versión con un comando del script  
+7. Mantenga consistencia con el portal documental  
+8. Permita crear versiones mayores y menores  
+9. Mantenga enlaces relativos correctos  
+
+Reglas del versionado:
+
+- Cambios mayores → nueva versión (v3 → v4)  
+- Cambios menores → subversión (v3.1 → v3.2)  
+- Cambios de formato → no generan versión nueva  
+- Cambios estructurales → requieren actualización del portal  
+
+El sistema debe ser:
+
+- Claro  
+- Ordenado  
+- Escalable  
+- Fácil de auditar  
+
+
+#####################################################################
+# 5) PROMPT MAESTRO — CHANGELOG DOCUMENTAL
+#####################################################################
+
+Genera un archivo **CHANGELOG_DOCUMENTACION.md** que:
+
+1. Registre cada cambio documental  
+2. Use el formato estándar **Keep a Changelog**  
+3. Incluya secciones:
+   - Added  
+   - Changed  
+   - Fixed  
+   - Removed  
+
+4. Registre:
+   - Fecha  
+   - Autor  
+   - Descripción del cambio  
+   - Archivos afectados  
+   - Motivo del cambio  
+   - Impacto documental  
+
+5. Sea actualizado automáticamente por el script  
+6. Permita rastrear evolución documental  
+7. Sea compatible con GitHub  
+
+Formato recomendado:
+
+## [vX.X.X] — YYYY-MM-DD
+### Added
+- …
+
+### Changed
+- …
+
+### Fixed
+- …
+
+### Removed
+- …
+
+
+=====================================================================
+FIN DE LOS 5 PROMPTS MAESTROS — SISTEMA DOCUMENTAL COMPLETO
+=====================================================================

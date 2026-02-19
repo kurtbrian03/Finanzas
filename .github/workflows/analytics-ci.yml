@@ -1,0 +1,49 @@
+name: Dropbox Analytics CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  test-analytics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit tests (search + analytics)
+        run: |
+          pytest -q tests/search tests/analytics
+
+      - name: Validate analytics orchestration outputs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tempfile
+          import subprocess
+          import sys
+
+          repo = Path('.').resolve()
+          with tempfile.TemporaryDirectory() as td:
+              base = Path(td) / 'FACTURACION' / 'TEXTO'
+              base.mkdir(parents=True, exist_ok=True)
+              (base / 'demo.txt').write_text('Factura demo hospital enero 2026', encoding='utf-8')
+              cmd = [sys.executable, str(repo / 'integrar_dropbox.py'), '--ruta', str(Path(td) / 'FACTURACION'), '--validate']
+              result = subprocess.run(cmd, cwd=repo, capture_output=True, text=True)
+              if result.returncode != 0:
+                  print(result.stdout)
+                  print(result.stderr)
+                  raise SystemExit(result.returncode)
+          PY

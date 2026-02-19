@@ -1,0 +1,248 @@
+{
+  "hospitales": [
+    {
+      "hospital": "SIN_HOSPITAL",
+      "archivos": 658
+    },
+    {
+      "hospital": "Pendiente 001.jpg",
+      "archivos": 23
+    },
+    {
+      "hospital": "Pendiente 002.jpg",
+      "archivos": 19
+    },
+    {
+      "hospital": "Pendiente 003.jpg",
+      "archivos": 5
+    },
+    {
+      "hospital": "8 HOSPITAL MAXIMILIANO RUIZ CASTAÑEDA",
+      "archivos": 4
+    },
+    {
+      "hospital": "Pendiente 004.jpg",
+      "archivos": 2
+    },
+    {
+      "hospital": "Hospital Regional Toluca",
+      "archivos": 2
+    },
+    {
+      "hospital": "9 HOSPITAL GENERAL IXTLAHUACA VALENTIN GOMES FARIAS",
+      "archivos": 2
+    },
+    {
+      "hospital": "11 ALBERTO MENDOZA GOMEZ 28 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "11 ALBERTO MENDOZA GOMEZ 28 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "12 AGUILAR SANCHEZ EVANGELINA 29 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "12 AGUILAR SANCHEZ EVANGELINA 29 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "12 AGUILAR SANCHEZ EVANGELINA 29 01 2026 003.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "13 ROSA MARIA ALVARADO 30 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "2 LUISA YOLANDA MEJIA ROJAS 08 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "2 LUISA YOLANDA MEJIA ROJAS 08 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "5 ALFONSO MIOZ DE LA ROSA 13 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "5 ALFONSO MIOZ DE LA ROSA 13 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "7 DIANA ESTRADA MENDOZA 16 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "8 JOSE EVERARDO LOPEZ GOMEZ 21 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "8 JOSE EVERARDO LOPEZ GOMEZ 21 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "8 JOSE EVERARDO LOPEZ GOMEZ 21 01 2026 003.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "15 REFUGIO MARIA DE LOURDES OSORIO SAENZ 29 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "15 REFUGIO MARIA DE LOURDES OSORIO SAENZ 29 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "16 GULEIA VILCHIS VILCHIS 22 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "16 GULEIA VILCHIS VILCHIS 22 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "17 MARIA DE LA LUZ DELGADO OLIVARES 22 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "17 MARIA DE LA LUZ DELGADO OLIVARES 22 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "18 OSCAR MENDOZA PARDINAS 20 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "19 CARLOS ALBERTO TORRES LOPEZ 22 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "19 CARLOS ALBERTO TORRES LOPEZ 22 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "19 CARLOS ALBERTO TORRES LOPEZ 22 01 2026 003.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "20 GONZALEZ ARRIAGA MARIO 26 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "20 GONZALEZ ARRIAGA MARIO 26 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "20 GONZALEZ ARRIAGA MARIO 26 01 2026 003.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "21 ROSA ELVA MEDINA DELGADO 27 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "21 ROSA ELVA MEDINA DELGADO 27 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "23 OSCAR MONROY MATEO 29 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "23 OSCAR MONROY MATEO 29 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "23 OSCAR MONROY MATEO 29 01 2026 003.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "24 EMIGDIO CAMPOS CID 29 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "24 EMIGDIO CAMPOS CID 29 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "25 JUANA ESTRADA RAMIREZ 29 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "26 MARIA NEVES YAEZ CORTEZ 30 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "27 JOSE LEOPOLDO MERCADO ACEBEDO 30 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "27 JOSE LEOPOLDO MERCADO ACEBEDO 30 01 2026 002.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "28 MARIA NELLY BLUERE NAVARRETE 31 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "Hospital Regional Nezahualcoyotl",
+      "archivos": 1
+    },
+    {
+      "hospital": "1 GARDUO GRANADOS ENRIQUE CADETA 23 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "3 RODRIGUEZ JASSO LIDIA TRAUMA ORTOPEDIA 17 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "4 JORDAN MORENO ALEJANDRO FIJADOR GRANDE 18 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "5 MAYEN GOMEZ JUAN PABLO ORTOPEDIA 20 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "6 JOSE MIGUEL ROSAS BERNAL ORTOPEDIA 25 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "01.12.2026 HERNANDEZ HERNANDEZ MARIA DE LOS ANGELES.pdf",
+      "archivos": 1
+    },
+    {
+      "hospital": "1 MONDRAGON RIOS JOSE ADRIAN PLACAS 19 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "2 FLORES SANCHE YOLANDA OSTEOSINTESIS 19 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "3 YOLANDA HERNANDEZ SARAHI ORTOPEDIA 15 01 2026 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "RUIZ RANGEL GUILLERMINA FFAC0000000456.pdf",
+      "archivos": 1
+    },
+    {
+      "hospital": "CamScanner 31 07 2025 08.58.pdf",
+      "archivos": 1
+    },
+    {
+      "hospital": "RIVERA ARAMIZ DOMINGO 30 07 2025 001.jpg",
+      "archivos": 1
+    },
+    {
+      "hospital": "5B1E5991 ADEC 4FD0 8535 A1EB0AEA9CEF 01.txt",
+      "archivos": 1
+    }
+  ]
+}

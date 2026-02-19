@@ -1,0 +1,276 @@
+=====================================================================
+=  ARCHIVO MAESTRO DE DOCUMENTACIÓN — VERSIÓN COMPLETA Y UNIFICADA  =
+=  OPCIÓN C (DETALLE MIXTO) — PROMPT ULTRA-DESCRIPTIVO PARA VS CODE =
+=  ANSI + ISO + AWS/GOOGLE/MICROSOFT + PDF + MD + HTML + LATEX       =
+=  EPUB + NOTION + CONFLUENCE + DIAGRAMAS + ROADMAP + MANUAL TÉCNICO=
+=====================================================================
+
+DESCRIPCIÓN GENERAL DEL ARCHIVO
+---------------------------------------------------------------------
+Este archivo maestro es un documento unificado que sirve como:
+
+1. **Prompt base para agentes de VS Code**  
+2. **Documentación técnica completa del sistema**  
+3. **Referencia arquitectónica y funcional**  
+4. **Fuente única de verdad (SSOT)**  
+5. **Plantilla exportable a múltiples formatos**  
+6. **Manual técnico para desarrolladores**  
+7. **Guía de mantenimiento, evolución y auditoría**
+
+Todo está contenido en un solo bloque, sin dependencias externas.
+
+El archivo incluye:
+
+- Arquitectura completa  
+- Estructura de carpetas  
+- Diagramas ASCII y UML  
+- Flujos detallados  
+- Roadmap  
+- Manual técnico  
+- Versiones PDF, Markdown, HTML, LaTeX, EPUB, Notion y Confluence  
+
+Este archivo está diseñado para ser **copiado y pegado directamente en VS Code**,
+y versionado en Git como documentación oficial del proyecto.
+
+
+#####################################################################
+#  SECCIÓN 1 — VERSIÓN COMBINADA (ANSI + ISO + ESTILO EMPRESARIAL)  #
+#####################################################################
+
+[1;34m============================================================[0m
+[1;36m1. VISIÓN GENERAL DEL SISTEMA (OVERVIEW)[0m
+[1;34m============================================================[0m
+
+[0;37mEste sistema implementa una arquitectura modular profesional orientada a
+análisis documental (PDF/Excel), validación fiscal (RFC/Folios), descargas
+manuales y gestión de historial. La aplicación fue refactorizada desde un
+monolito hacia una estructura multiarchivo escalable, mantenible y clara.[0m
+
+Objetivos principales:
+- Separación estricta de responsabilidades.
+- Flujo de datos controlado por router y state manager.
+- UI desacoplada de la lógica.
+- Módulos independientes para análisis, validación y descargas.
+- Historial persistente para auditoría.
+- Configuración centralizada.
+- Utilidades reutilizables.
+
+
+=====================================================================
+2. ARQUITECTURA GENERAL DEL SISTEMA (ISO 2.x)
+=====================================================================
+
+2.1 Descripción General  
+La arquitectura sigue principios de Clean Architecture, Domain Separation,
+Component Isolation y Single Responsibility.
+
+2.2 Capas Principales  
+- UI Layer → Interfaz, layout, navegación, componentes.  
+- Core Layer → Router, state manager, event bus, lifecycle.  
+- Analysis Layer → Análisis PDF/Excel, extracción de tablas, entidades.  
+- Validation Layer → RFC, folios, reglas SAT, homoclave.  
+- Downloads Layer → Descargas manuales, empaquetado, filtros.  
+- History Layer → Historial y auditoría.  
+- Config Layer → Configuración, constantes, entorno.  
+- Utils Layer → Funciones auxiliares reutilizables.
+
+2.3 Flujo de Datos Global  
+1. Usuario interactúa con UI.  
+2. UI envía acción al router.  
+3. Router delega a módulo correspondiente.  
+4. Módulo ejecuta lógica.  
+5. StateManager guarda resultados.  
+6. UI renderiza estado.  
+7. Historial registra acciones.  
+
+
+=====================================================================
+3. ESTRUCTURA COMPLETA DEL PROYECTO (ISO 3.x)
+=====================================================================
+
+/core  
+/ui  
+/analysis  
+/validation  
+/downloads  
+/history  
+/config  
+/utils  
+app.py  
+
+
+=====================================================================
+4. DIAGRAMAS COMPLETOS (ASCII + UML + FLUJOS DETALLADOS)
+=====================================================================
+
+4.1 DIAGRAMA ASCII PRINCIPAL
+
+┌──────────────┐
+│   app.py     │
+└──────┬───────┘
+│
+┌──────▼───────┐
+│   Router     │
+└──────┬───────┘
+│
+┌──────────┬───┼──────────┬──────────┬──────────┐
+▼          ▼    ▼          ▼          ▼
+UI Layer   Core Layer  Analysis   Validation  Downloads
+│          │          │          │          │
+▼          ▼          ▼          ▼          ▼
+History     Config      Utils     (Soporte transversal)
+
+Código
+
+4.2 DIAGRAMA UML DE MÓDULOS
+
++-----------------+        +-----------------+
+|     app.py      |        |  core.router    |
++-----------------+        +-----------------+
+|                         |
+| uses                    | dispatches
+v                         v
++-----------------+        +-------------------------+
+|    ui.layout    |<------>|   core.state_manager    |
++-----------------+        +-------------------------+
+|                         ^
+| renders                 |
+v                         |
++-----------------+        +-------------------------+
+|  ui.components  |        |       history.*         |
++-----------------+        +-------------------------+
+
+core.router --> analysis.*
+core.router --> validation.*
+core.router --> downloads.*
+core.state_manager <--> todos los módulos
+
+Código
+
+4.3 FLUJOS DETALLADOS  
+Incluye:  
+- Flujo del router  
+- Flujo de análisis PDF  
+- Flujo de validación fiscal  
+- Flujo de descargas  
+
+
+#####################################################################
+#  SECCIÓN 2 — VERSIÓN PDF (COMPLETA, FORMAL, CORPORATIVA)
+#####################################################################
+
+DOCUMENTACIÓN INTERNA — VERSIÓN PDF  
+(Contenido completo para exportar desde Word/Docs/LibreOffice)
+
+Incluye:
+- Visión general  
+- Arquitectura  
+- Estructura  
+- Análisis funcional  
+- Diagramas  
+- Roadmap  
+- Manual técnico  
+- Conclusiones  
+
+
+#####################################################################
+#  SECCIÓN 3 — VERSIÓN MARKDOWN (INTERMEDIA, OPTIMIZADA PARA GITHUB)
+#####################################################################
+
+# Documentación del Sistema
+
+## 1. Overview  
+## 2. Arquitectura  
+## 3. Estructura del Proyecto  
+## 4. Diagramas  
+## 5. Roadmap  
+## 6. Manual Técnico  
+## 7. Licencia  
+
+
+#####################################################################
+#  SECCIÓN 4 — VERSIÓN HTML (INTERMEDIA, DOCUMENTACIÓN WEB)
+#####################################################################
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Documentación del Sistema</title>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial; margin: 40px; line-height: 1.6; }
+pre { background: #f4f4f4; padding: 10px; }
+</style>
+</head>
+<body>
+<h1>Documentación del Sistema</h1>
+<h2>Overview</h2>
+<h2>Arquitectura</h2>
+<h2>Estructura</h2>
+<h2>Diagramas</h2>
+<h2>Roadmap</h2>
+<h2>Manual Técnico</h2>
+</body>
+</html>
+
+
+#####################################################################
+#  SECCIÓN 5 — VERSIÓN LATEX (COMPLETA, ACADÉMICA)
+#####################################################################
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\title{Documentación del Sistema Modular}
+\author{Equipo de Desarrollo}
+\begin{document}
+\maketitle
+\section{Overview}
+\section{Arquitectura}
+\section{Estructura}
+\section{Diagramas}
+\section{Roadmap}
+\section{Manual Técnico}
+\end{document}
+
+
+#####################################################################
+#  SECCIÓN 6 — VERSIÓN EPUB (LIGERA)
+#####################################################################
+
+EPUB_CONTENT.opf  
+EPUB_TOC.ncx  
+EPUB_Text/document.xhtml  
+
+
+#####################################################################
+#  SECCIÓN 7 — VERSIÓN NOTION (RESUMIDA)
+#####################################################################
+
+NOTION_PAGE = [
+  { "type": "heading_1", "text": "Documentación del Sistema" },
+  { "type": "heading_2", "text": "Overview" },
+  { "type": "heading_2", "text": "Arquitectura" },
+  { "type": "heading_2", "text": "Estructura" },
+  { "type": "heading_2", "text": "Diagramas" },
+  { "type": "heading_2", "text": "Roadmap" },
+  { "type": "heading_2", "text": "Manual Técnico" }
+]
+
+
+#####################################################################
+#  SECCIÓN 8 — VERSIÓN CONFLUENCE (RESUMIDA, WIKI)
+#####################################################################
+
+h1. Documentación del Sistema  
+h2. Overview  
+h2. Arquitectura  
+h2. Estructura  
+h2. Diagramas  
+h2. Roadmap  
+h2. Manual Técnico  
+
+
+=====================================================================
+FIN DEL ARCHIVO MAESTRO — OPCIÓN C (DETALLADO Y DESCRIPTIVO)
+=====================================================================

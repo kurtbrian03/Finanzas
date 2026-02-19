@@ -1,0 +1,806 @@
+=====================================================================
+=  ARCHIVO MAESTRO DE DOCUMENTACIÓN — VERSIÓN EXTENDIDA Y DETALLADA =
+=  PROMPT ULTRA-DESCRIPTIVO PARA VS CODE / AGENTES / DOCS EMPRESARIALES =
+=  ANSI + ISO + AWS/GOOGLE/MICROSOFT + PDF + MD + HTML + LATEX + WIKI =
+=====================================================================
+
+DESCRIPCIÓN GENERAL DEL ARCHIVO
+---------------------------------------------------------------------
+Este archivo maestro está diseñado para que lo copies COMPLETO en VS Code
+y lo uses como:
+
+- Prompt de referencia para agentes (Copilot, Chat, etc.).
+- Base de documentación técnica interna (PDF, Markdown, HTML, LaTeX).
+- Guía de arquitectura, flujos, módulos y roadmap.
+- Manual técnico para desarrolladores y arquitectos.
+
+Todo está contenido dentro de este único bloque de texto.  
+No hay dependencias externas.  
+No hay texto fuera del código.  
+
+La idea es que este archivo represente:
+
+1) Cómo está organizada la app refactorizada.  
+2) Cómo se comunican los módulos.  
+3) Qué flujos existen (PDF, Excel, Validación, Descargas).  
+4) Qué roadmap se propone.  
+5) Cómo documentarlo en distintos formatos (PDF, MD, HTML, LaTeX, Notion, Confluence, EPUB).  
+
+Puedes usarlo como:
+
+- Prompt maestro para análisis.  
+- Base para generar documentación.  
+- Contrato arquitectónico de la app.  
+
+
+#####################################################################
+#  SECCIÓN 1 — VERSIÓN COMBINADA (ANSI + ISO + ESTILO EMPRESARIAL)  #
+#####################################################################
+
+[1;34m============================================================[0m
+[1;36m1. VISIÓN GENERAL DEL SISTEMA (OVERVIEW)[0m
+[1;34m============================================================[0m
+
+[0;37mEste sistema es una aplicación modular orientada al análisis de documentos
+(PDF, Excel), validación fiscal (RFC, folios), descargas controladas y
+gestión de historial, construida sobre una arquitectura multiarchivo
+profesional. La lógica se encuentra organizada por capas y responsabilidades,
+evitando el monolito y favoreciendo la escalabilidad y el mantenimiento.[0m
+
+Objetivos clave del sistema:
+- Proveer una interfaz clara para cargar y analizar documentos.
+- Validar información fiscal de forma estructurada y extensible.
+- Permitir descargas manuales, nunca automáticas.
+- Mantener un historial de acciones para auditoría.
+- Separar UI, lógica de negocio, validación, descargas y configuración.
+
+Este documento describe la arquitectura, la estructura de carpetas, los
+flujos de ejecución, los diagramas de alto nivel, el roadmap de evolución
+y un manual técnico para desarrolladores.
+
+
+=====================================================================
+2. ARQUITECTURA GENERAL DEL SISTEMA (ISO 2.x)
+=====================================================================
+
+2.1 Descripción General de la Arquitectura
+------------------------------------------
+La arquitectura sigue un enfoque por capas y módulos, donde cada carpeta
+representa una responsabilidad bien definida. El objetivo es:
+
+- Reducir el acoplamiento entre componentes.
+- Aumentar la cohesión dentro de cada módulo.
+- Facilitar pruebas, refactor y extensiones futuras.
+- Mantener un punto de entrada mínimo (app.py) que delega todo.
+
+2.2 Capas Principales
+---------------------
+- UI Layer  
+  - Responsabilidad: Interfaz de usuario, layout, navegación, componentes visuales.
+  - Interactúa con: core.router, core.state_manager.
+- Core Layer  
+  - Responsabilidad: Enrutamiento, manejo de estado, ciclo de vida, eventos internos.
+  - Interactúa con: todas las demás capas.
+- Analysis Layer  
+  - Responsabilidad: Análisis de PDFs y Excels, extracción de tablas, detección de entidades.
+- Validation Layer  
+  - Responsabilidad: Validación de RFC, folios, reglas SAT, homoclave.
+- Downloads Layer  
+  - Responsabilidad: Descargas manuales, empaquetado, filtros de descarga.
+- History Layer  
+  - Responsabilidad: Historial de acciones, auditoría, persistencia de eventos.
+- Config Layer  
+  - Responsabilidad: Configuración, constantes, entorno (dev/prod).
+- Utils Layer  
+  - Responsabilidad: Funciones auxiliares reutilizables (archivos, errores, formatos).
+
+2.3 Flujo de Datos Global
+-------------------------
+1. El usuario interactúa con la UI (carga un archivo, ingresa un RFC, solicita una descarga).
+2. La UI envía la intención al router (core.router).
+3. El router decide qué módulo debe manejar la acción (analysis, validation, downloads, etc.).
+4. El módulo ejecuta la lógica correspondiente (análisis, validación, empaquetado).
+5. El state_manager (core.state_manager) guarda los resultados y el estado actual.
+6. La UI lee el estado y muestra resultados, mensajes y opciones de acción.
+7. El history_manager registra eventos relevantes (acciones del usuario, descargas, validaciones).
+
+
+=====================================================================
+3. ESTRUCTURA COMPLETA DEL PROYECTO (ISO 3.x)
+=====================================================================
+
+3.1 Estructura de Carpetas y Responsabilidades
+----------------------------------------------
+
+/core  
+    state_manager.py        # Manejo centralizado de estado (session_state, flags, resultados).  
+    router.py               # Enrutamiento de vistas y acciones de usuario.  
+    event_bus.py            # Sistema de eventos internos entre módulos (pub/sub simple).  
+    lifecycle.py            # Hooks de ciclo de vida (inicio, cierre, reinicio lógico).  
+
+/ui  
+    layout.py               # Layout principal: panel izquierdo, central, derecho, header, footer.  
+    components.py           # Componentes reutilizables: tablas, cards, alerts, loaders, formularios.  
+    navigation.py           # Lógica de navegación: rutas, secciones, selección de vista.  
+    theme.py                # Definición de colores, tipografías, tamaños, estilos visuales.  
+    messages.py             # Textos, labels, mensajes de error/éxito, tooltips, textos de ayuda.  
+
+/analysis  
+    pdf_analyzer.py         # Lógica de análisis de PDFs: texto, metadatos, estructura.  
+    excel_analyzer.py       # Lógica de análisis de Excel: hojas, columnas, tipos, estadísticas.  
+    table_extractor.py      # Extracción de tablas desde PDF/Excel.  
+    entity_detector.py      # Detección de entidades (RFC, montos, fechas, folios, etc.).  
+    tone_analyzer.py        # Análisis de tono o clasificación básica de contenido (opcional).  
+
+/validation  
+    rfc_validator.py        # Validación estructural de RFC (longitud, patrón, homoclave).  
+    folio_validator.py      # Validación de folios fiscales (formato, longitud, patrón).  
+    sat_rules.py            # Reglas de negocio alineadas a SAT (estructura, patrones, restricciones).  
+    homoclave_engine.py     # Cálculo y validación de homoclave (si aplica).  
+
+/downloads  
+    downloader.py           # Lógica de generación de descargas manuales (botones, streams).  
+    download_filters.py     # Filtros para decidir qué se puede descargar y en qué formato.  
+    file_packager.py        # Empaquetado de archivos (zip, csv, combinaciones).  
+    preview_metadata.py     # Metadatos de archivos para vista previa y descargas (nombre, tipo, tamaño).  
+
+/history  
+    history_manager.py      # Manejo de historial en memoria o persistente (acciones del usuario).  
+    audit_log.py            # Registro de acciones relevantes para auditoría.  
+    persistence.py          # Abstracción de persistencia (archivo local, DB futura, etc.).  
+
+/config  
+    settings.py             # Configuración general (flags, parámetros, límites).  
+    constants.py            # Constantes globales (nombres de columnas, claves, rutas lógicas).  
+    environment.py          # Variables de entorno, modos dev/prod, configuración externa.  
+
+/utils  
+    file_utils.py           # Utilidades de archivos (lectura, validación de extensión, paths).  
+    error_utils.py          # Manejo y formateo de errores, trazas amigables.  
+    format_utils.py         # Formateo de textos, números, fechas, máscaras.  
+    pdf_utils.py            # Utilidades específicas para PDF (lectura, extracción).  
+    excel_utils.py          # Utilidades específicas para Excel (lectura, validación).  
+
+app.py                      # Punto de entrada mínimo: configura Streamlit, inicializa router y layout.
+
+
+=====================================================================
+4. DIAGRAMAS COMPLETOS (ASCII + UML + FLUJOS DETALLADOS)
+=====================================================================
+
+4.1 Diagrama ASCII Principal de Arquitectura
+--------------------------------------------
+
+Este diagrama muestra la relación entre el punto de entrada, el router,
+las capas principales y los módulos transversales.
+
+┌──────────────┐
+│   app.py     │   ← Punto de entrada mínimo
+└──────┬───────┘
+│
+┌──────▼───────┐
+│   Router     │   ← core.router: decide a qué módulo ir
+└──────┬───────┘
+│
+┌──────────┬───┼──────────┬──────────┬──────────┐
+▼          ▼    ▼          ▼          ▼
+UI Layer   Core Layer  Analysis   Validation  Downloads
+│          │          │          │          │
+▼          ▼          ▼          ▼          ▼
+History     Config      Utils     (Soporte transversal)
+
+Código
+
+4.2 Diagrama UML de Módulos (Alto Nivel)
+----------------------------------------
+
+Este diagrama UML simplificado muestra cómo se relacionan app.py, el router,
+el state_manager, la UI y el historial.
+
++-----------------+        +-----------------+
+|     app.py      |        |  core.router    |
++-----------------+        +-----------------+
+|                         |
+| uses                    | dispatches
+v                         v
++-----------------+        +-------------------------+
+|    ui.layout    |<------>|   core.state_manager    |
++-----------------+        +-------------------------+
+|                         ^
+| renders                 |
+v                         |
++-----------------+        +-------------------------+
+|  ui.components  |        |       history.*         |
++-----------------+        +-------------------------+
+
+core.router --> analysis.*
+core.router --> validation.*
+core.router --> downloads.*
+core.state_manager <--> todos los módulos
+
+Código
+
+4.3 Flujo del Router (Detallado)
+--------------------------------
+
+El usuario realiza una acción en la UI (ej. seleccionar "Análisis PDF").
+
+ui.navigation determina la ruta lógica (ej. "analysis_pdf").
+
+ui.layout llama a core.router con la acción seleccionada.
+
+core.router evalúa la acción y decide qué módulo ejecutar:
+
+"analysis_pdf" → analysis.pdf_analyzer
+
+"analysis_excel" → analysis.excel_analyzer
+
+"validate_rfc" → validation.rfc_validator
+
+"download_results" → downloads.downloader
+
+El módulo ejecuta la lógica correspondiente.
+
+core.state_manager guarda los resultados (ej. análisis, errores, flags).
+
+ui.layout y ui.components leen el estado y renderizan la vista actualizada.
+
+Código
+
+4.4 Flujo de Análisis PDF (Detallado)
+-------------------------------------
+
+Usuario carga un archivo PDF desde la UI.
+
+ui.components llama a utils.file_utils para validar extensión y tamaño.
+
+Si es válido, se envía el archivo al router con la acción "analysis_pdf".
+
+core.router llama a analysis.pdf_analyzer con el archivo.
+
+pdf_analyzer:
+
+Extrae texto y metadatos.
+
+Llama a table_extractor para detectar tablas.
+
+Llama a entity_detector para encontrar RFC, montos, fechas, etc.
+
+Opcionalmente llama a tone_analyzer para clasificar el contenido.
+
+Los resultados se guardan en core.state_manager.
+
+ui.layout muestra:
+
+Vista previa del PDF (solo lectura).
+
+Resultados de análisis (tablas, entidades, métricas).
+
+history_manager registra que se realizó un análisis PDF.
+
+Código
+
+4.5 Flujo de Validación Fiscal (RFC/Folio)
+------------------------------------------
+
+Usuario ingresa un RFC o folio fiscal en la UI.
+
+ui.components envía la acción "validate_rfc" o "validate_folio" al router.
+
+core.router llama a:
+
+validation.rfc_validator para RFC.
+
+validation.folio_validator para folios.
+
+rfc_validator:
+
+Usa sat_rules para validar estructura, longitud y patrón.
+
+Usa homoclave_engine para validar homoclave (si aplica).
+
+El resultado (válido/ inválido, motivos) se guarda en state_manager.
+
+ui.layout muestra el resultado con mensajes claros (válido, inválido, por qué).
+
+history_manager registra la validación realizada.
+
+Código
+
+4.6 Flujo de Descargas (Manual y Controlado)
+--------------------------------------------
+
+Usuario selecciona una opción de descarga (ej. "Descargar resultados en CSV").
+
+ui.components envía la acción "download_results" al router.
+
+core.router llama a downloads.downloader.
+
+downloads.downloader:
+
+Usa download_filters para verificar qué se puede descargar.
+
+Usa file_packager para generar el archivo final (CSV, ZIP, etc.).
+
+La UI muestra un botón de descarga manual (nunca automática).
+
+El usuario hace clic y se dispara la descarga.
+
+history_manager registra la descarga (tipo, fecha, contexto).
+
+Código
+
+
+#####################################################################
+#  SECCIÓN 2 — VERSIÓN PDF (LISTA PARA EXPORTAR, ESTILO CORPORATIVO)
+#####################################################################
+
+DOCUMENTACIÓN INTERNA — VERSIÓN PDF  
+(Contenido formal, sin ANSI, pensado para Word/LibreOffice/Google Docs y luego exportar a PDF)
+
+1. Visión General  
+1.1 Propósito  
+Describir la arquitectura, estructura, flujos y lineamientos técnicos de la aplicación refactorizada.  
+
+1.2 Alcance  
+Incluye arquitectura lógica, estructura de carpetas, flujos de ejecución, roadmap y guía técnica para desarrolladores.  
+
+1.3 Audiencia  
+Desarrolladores, arquitectos de software, auditores técnicos y responsables de mantenimiento.  
+
+2. Arquitectura General  
+2.1 Modelo de Capas  
+La aplicación se organiza en capas: UI, Core, Analysis, Validation, Downloads, History, Config y Utils.  
+
+2.2 Componentes Principales  
+Cada capa contiene módulos con responsabilidades únicas, desacoplados y documentados.  
+
+2.3 Flujo de Datos  
+El flujo principal va desde la interacción del usuario en la UI, pasando por el router y el state manager, hasta los módulos de análisis, validación y descargas, con registro en el historial.  
+
+3. Estructura del Proyecto  
+3.1 Carpetas  
+Se describen las carpetas principales: core, ui, analysis, validation, downloads, history, config, utils y app.py.  
+
+3.2 Responsabilidades  
+Cada carpeta agrupa módulos con responsabilidades coherentes y bien definidas.  
+
+3.3 Interacciones  
+Las interacciones se realizan a través del router, el state manager y eventos internos.  
+
+4. Análisis Funcional  
+4.1 Análisis de PDF  
+Se analiza contenido, tablas, entidades y metadatos.  
+
+4.2 Análisis de Excel  
+Se analizan hojas, columnas, tipos de datos y estadísticas.  
+
+4.3 Validación Fiscal  
+Se valida RFC, folios y reglas SAT.  
+
+4.4 Descargas  
+Se generan descargas manuales controladas por el usuario.  
+
+5. Diagramas  
+5.1 Arquitectura  
+Diagrama de módulos y capas.  
+
+5.2 Flujo del Router  
+Flujo desde UI → Router → Módulos → UI.  
+
+5.3 Flujo de Usuario  
+Desde carga de archivo hasta resultados y descargas.  
+
+6. Roadmap  
+6.1 Corto Plazo  
+Documentación, pruebas básicas, persistencia simple.  
+
+6.2 Mediano Plazo  
+APIs SAT, dashboards, cache.  
+
+6.3 Largo Plazo  
+IA, clasificación CFDI, multiusuario, integración empresarial.  
+
+7. Manual Técnico  
+7.1 Inicio  
+Pasos para levantar el proyecto.  
+
+7.2 Extensión  
+Cómo agregar nuevas funciones y módulos.  
+
+7.3 Mantenimiento  
+Buenas prácticas para mantener la arquitectura.  
+
+7.4 Depuración  
+Estrategias para identificar y corregir errores.  
+
+8. Conclusiones  
+8.1 Estado Actual  
+La aplicación se encuentra en un nivel profesional funcional con arquitectura modular.  
+
+8.2 Recomendaciones  
+Seguir el roadmap propuesto y mantener la disciplina arquitectónica.  
+
+8.3 Futuro  
+Escalar hacia un entorno enterprise con integración de IA y servicios externos.  
+
+
+#####################################################################
+#  SECCIÓN 3 — VERSIÓN MARKDOWN (OPTIMIZADA PARA GITHUB)
+#####################################################################
+
+# Documentación del Sistema
+
+## 1. Overview
+Documentación técnica del sistema modular refactorizado, orientado a análisis de documentos, validación fiscal y descargas controladas.
+
+## 2. Arquitectura
+
+La arquitectura está organizada en capas:
+
+- **UI Layer**: Interfaz, layout, navegación, componentes.  
+- **Core Layer**: Router, state manager, event bus, lifecycle.  
+- **Analysis Layer**: Análisis de PDF y Excel, extracción de tablas y entidades.  
+- **Validation Layer**: Validación de RFC, folios y reglas SAT.  
+- **Downloads Layer**: Descargas manuales, empaquetado y filtros.  
+- **History Layer**: Historial y auditoría.  
+- **Config Layer**: Configuración, constantes y entorno.  
+- **Utils Layer**: Utilidades compartidas.  
+
+## 3. Estructura del Proyecto
+
+```text
+/core
+/ui
+/analysis
+/validation
+/downloads
+/history
+/config
+/utils
+app.py
+4. Diagramas
+4.1 Arquitectura (ASCII)
+text
+                ┌──────────────┐
+                │   app.py     │
+                └──────┬───────┘
+                       │
+                ┌──────▼───────┐
+                │   Router     │
+                └──────┬───────┘
+                       │
+        ┌──────────┬───┼──────────┬──────────┬──────────┐
+        ▼          ▼    ▼          ▼          ▼
+   UI Layer   Core Layer  Analysis   Validation  Downloads
+        │          │          │          │          │
+        ▼          ▼          ▼          ▼          ▼
+     History     Config      Utils     (Soporte transversal)
+4.2 Flujo Router
+text
+Usuario → UI → Router → Módulos → StateManager → UI
+5. Roadmap
+5.1 Corto Plazo
+Documentación interna completa.
+
+Pruebas unitarias básicas.
+
+Persistencia simple del historial.
+
+5.2 Mediano Plazo
+Integración con APIs SAT.
+
+Dashboards analíticos.
+
+Cache inteligente.
+
+5.3 Largo Plazo
+IA documental avanzada.
+
+Clasificación automática de CFDI.
+
+Multiusuario.
+
+Integración con bases de datos empresariales.
+
+6. Manual Técnico
+Cómo iniciar el proyecto (streamlit run app.py).
+
+Cómo agregar nuevas funciones (módulo correcto + router + state_manager).
+
+Cómo extender análisis PDF/Excel.
+
+Cómo agregar nuevos métodos de descarga.
+
+Cómo mantener la arquitectura limpia.
+
+7. Licencia
+MIT / Privado (definir según el caso).
+
+#####################################################################
+
+SECCIÓN 4 — VERSIÓN HTML (DOCUMENTACIÓN WEB)
+#####################################################################
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Documentación del Sistema</title>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+h1, h2, h3 { color: #2c3e50; }
+pre { background: #f4f4f4; padding: 10px; border-radius: 4px; }
+code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+ul { margin-left: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Documentación del Sistema</h1>
+
+<h2>1. Overview</h2>
+<p>
+Documentación técnica del sistema modular refactorizado, orientado a análisis de documentos,
+validación fiscal y descargas controladas.
+</p>
+
+<h2>2. Arquitectura</h2>
+<p>La arquitectura está organizada en las siguientes capas:</p>
+<ul>
+<li><strong>UI Layer</strong>: Interfaz, layout, navegación, componentes.</li>
+<li><strong>Core Layer</strong>: Router, state manager, event bus, lifecycle.</li>
+<li><strong>Analysis Layer</strong>: Análisis de PDF y Excel, extracción de tablas y entidades.</li>
+<li><strong>Validation Layer</strong>: Validación de RFC, folios y reglas SAT.</li>
+<li><strong>Downloads Layer</strong>: Descargas manuales, empaquetado y filtros.</li>
+<li><strong>History Layer</strong>: Historial y auditoría.</li>
+<li><strong>Config Layer</strong>: Configuración, constantes y entorno.</li>
+<li><strong>Utils Layer</strong>: Utilidades compartidas.</li>
+</ul>
+
+<h2>3. Estructura del Proyecto</h2>
+<pre><code>/core
+/ui
+/analysis
+/validation
+/downloads
+/history
+/config
+/utils
+app.py
+</code></pre>
+
+<h2>4. Diagramas</h2>
+
+<h3>4.1 Arquitectura (ASCII)</h3>
+<pre><code>                ┌──────────────┐
+│   app.py     │
+└──────┬───────┘
+│
+┌──────▼───────┐
+│   Router     │
+└──────┬───────┘
+│
+┌──────────┬───┼──────────┬──────────┬──────────┐
+▼          ▼    ▼          ▼          ▼
+UI Layer   Core Layer  Analysis   Validation  Downloads
+│          │          │          │          │
+▼          ▼          ▼          ▼          ▼
+History     Config      Utils     (Soporte transversal)
+</code></pre>
+
+<h3>4.2 Flujo Router</h3>
+<pre><code>Usuario → UI → Router → Módulos → StateManager → UI
+</code></pre>
+
+<h2>5. Roadmap</h2>
+
+<h3>5.1 Corto Plazo</h3>
+<ul>
+<li>Documentación interna completa.</li>
+<li>Pruebas unitarias básicas.</li>
+<li>Persistencia simple del historial.</li>
+</ul>
+
+<h3>5.2 Mediano Plazo</h3>
+<ul>
+<li>Integración con APIs SAT.</li>
+<li>Dashboards analíticos.</li>
+<li>Cache inteligente.</li>
+</ul>
+
+<h3>5.3 Largo Plazo</h3>
+<ul>
+<li>IA documental avanzada.</li>
+<li>Clasificación automática de CFDI.</li>
+<li>Multiusuario.</li>
+<li>Integración con bases de datos empresariales.</li>
+</ul>
+
+<h2>6. Manual Técnico</h2>
+<ul>
+<li>Cómo iniciar el proyecto (<code>streamlit run app.py</code>).</li>
+<li>Cómo agregar nuevas funciones (módulo correcto + router + state_manager).</li>
+<li>Cómo extender análisis PDF/Excel.</li>
+<li>Cómo agregar nuevos métodos de descarga.</li>
+<li>Cómo mantener la arquitectura limpia.</li>
+</ul>
+
+</body>
+</html>
+
+#####################################################################
+
+SECCIÓN 5 — VERSIÓN LaTeX (DOCUMENTACIÓN ACADÉMICA)
+#####################################################################
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\title{Documentación del Sistema Modular de Análisis y Validación}
+\author{Equipo de Desarrollo}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+Este documento describe la arquitectura y el diseño de un sistema modular
+para análisis de documentos, validación fiscal y descargas controladas.
+
+\section{Arquitectura}
+La arquitectura se organiza en capas: UI, Core, Analysis, Validation,
+Downloads, History, Config y Utils.
+
+\section{Estructura del Proyecto}
+La estructura de carpetas es la siguiente:
+\begin{verbatim}
+/core
+/ui
+/analysis
+/validation
+/downloads
+/history
+/config
+/utils
+app.py
+\end{verbatim}
+
+\section{Diagramas}
+Se incluyen diagramas ASCII y UML para representar la arquitectura y los flujos.
+
+\section{Roadmap}
+Se define un roadmap de corto, mediano y largo plazo para la evolución del sistema.
+
+\section{Manual Técnico}
+Se describen lineamientos para iniciar el proyecto, extender funcionalidades
+y mantener la arquitectura.
+
+\end{document}
+
+#####################################################################
+
+SECCIÓN 6 — VERSIÓN EPUB (ESQUELETO DE CONTENIDO)
+#####################################################################
+
+EPUB_CONTENT.opf (metadatos, manifest, spine)
+EPUB_TOC.ncx (tabla de contenidos)
+EPUB_Text/document.xhtml (contenido principal)
+
+Contenido base XHTML:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Documentación del Sistema</title></head>
+<body>
+<h1>Documentación del Sistema</h1>
+<h2>Overview</h2>
+<p>Descripción general del sistema modular.</p>
+<h2>Arquitectura</h2>
+<p>Capas: UI, Core, Analysis, Validation, Downloads, History, Config, Utils.</p>
+<h2>Estructura del Proyecto</h2>
+<pre>/core, /ui, /analysis, /validation, /downloads, /history, /config, /utils, app.py</pre>
+<h2>Diagramas</h2>
+<p>Diagramas ASCII y UML.</p>
+<h2>Roadmap</h2>
+<p>Corto, mediano y largo plazo.</p>
+<h2>Manual Técnico</h2>
+<p>Guía para desarrolladores.</p>
+</body>
+</html>
+
+#####################################################################
+
+SECCIÓN 7 — VERSIÓN NOTION (BLOQUES JSON-LIKE)
+#####################################################################
+
+NOTION_PAGE = [
+{ "type": "heading_1", "text": "Documentación del Sistema" },
+{ "type": "heading_2", "text": "Overview" },
+{ "type": "paragraph", "text": "Descripción general del sistema modular de análisis y validación." },
+{ "type": "heading_2", "text": "Arquitectura" },
+{ "type": "bulleted_list", "items": [
+"UI Layer: Interfaz y componentes.",
+"Core Layer: Router y state manager.",
+"Analysis Layer: Análisis de PDF/Excel.",
+"Validation Layer: Validación fiscal.",
+"Downloads Layer: Descargas manuales.",
+"History Layer: Historial y auditoría.",
+"Config Layer: Configuración y constantes.",
+"Utils Layer: Utilidades compartidas."
+]
+},
+{ "type": "heading_2", "text": "Estructura del Proyecto" },
+{ "type": "code", "language": "text", "text": "/core\n/ui\n/analysis\n/validation\n/downloads\n/history\n/config\n/utils\napp.py" },
+{ "type": "heading_2", "text": "Diagramas" },
+{ "type": "code", "language": "text", "text": "ASCII y UML de arquitectura y flujos." },
+{ "type": "heading_2", "text": "Roadmap" },
+{ "type": "paragraph", "text": "Corto, mediano y largo plazo para evolución del sistema." },
+{ "type": "heading_2", "text": "Manual Técnico" },
+{ "type": "paragraph", "text": "Instrucciones para iniciar, extender y mantener el proyecto." }
+]
+
+#####################################################################
+
+SECCIÓN 8 — VERSIÓN CONFLUENCE (WIKI MARKUP)
+#####################################################################
+
+h1. Documentación del Sistema
+
+h2. Overview
+Documentación técnica del sistema modular de análisis de documentos y validación fiscal.
+
+h2. Arquitectura
+
+UI Layer
+
+Core Layer
+
+Analysis Layer
+
+Validation Layer
+
+Downloads Layer
+
+History Layer
+
+Config Layer
+
+Utils Layer
+
+h2. Estructura del Proyecto
+{code}
+/core
+/ui
+/analysis
+/validation
+/downloads
+/history
+/config
+/utils
+app.py
+{code}
+
+h2. Diagramas
+{code}
+ASCII y UML de arquitectura y flujos.
+{code}
+
+h2. Roadmap
+
+Corto Plazo
+
+Mediano Plazo
+
+Largo Plazo
+
+h2. Manual Técnico
+Guía para desarrolladores: inicio, extensión, mantenimiento y depuración.
+
+=====================================================================
+FIN DEL ARCHIVO MAESTRO — VERSIÓN ULTRA-DESCRIPTIVA Y DETALLADA
+=====================================================================
+
+Código

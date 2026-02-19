@@ -6,7 +6,12 @@ idna==3.11
 isodate==0.7.2
 lxml==6.0.2
 numpy==2.4.2
+opencv-python==4.13.0.92
 openpyxl==3.1.5
+pillow==12.1.1
+pymupdf==1.27.1
+python-docx==1.2.0
+python-magic==0.4.27
 pandas==3.0.0
 platformdirs==4.9.2
 python-dateutil==2.9.0.post0
@@ -14,7 +19,11 @@ pytz==2025.2
 requests==2.32.5
 requests-file==3.0.1
 requests-toolbelt==1.0.0
+rapidfuzz==3.14.3
+pytest==8.4.2
+scikit-learn==1.7.2
 six==1.17.0
+streamlit==1.54.0
 tzdata==2025.3
 urllib3==2.6.3
 zeep==4.3.2

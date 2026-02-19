@@ -1,0 +1,29 @@
+{
+  "tipos": [
+    {
+      "tipo": "PDF",
+      "archivos": 519,
+      "tamano_bytes": 31068864
+    },
+    {
+      "tipo": "IMAGEN",
+      "archivos": 236,
+      "tamano_bytes": 40603508
+    },
+    {
+      "tipo": "EXCEL",
+      "archivos": 9,
+      "tamano_bytes": 525909
+    },
+    {
+      "tipo": "ZIP",
+      "archivos": 3,
+      "tamano_bytes": 63868
+    },
+    {
+      "tipo": "TEXTO",
+      "archivos": 1,
+      "tamano_bytes": 88375
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "meses": [
+    {
+      "mes": "12",
+      "archivos": 67
+    },
+    {
+      "mes": "11",
+      "archivos": 65
+    },
+    {
+      "mes": "07",
+      "archivos": 61
+    },
+    {
+      "mes": "SIN_MES",
+      "archivos": 60
+    },
+    {
+      "mes": "03",
+      "archivos": 60
+    },
+    {
+      "mes": "01-Enero",
+      "archivos": 59
+    },
+    {
+      "mes": "01",
+      "archivos": 57
+    },
+    {
+      "mes": "08",
+      "archivos": 56
+    },
+    {
+      "mes": "04",
+      "archivos": 51
+    },
+    {
+      "mes": "09",
+      "archivos": 51
+    },
+    {
+      "mes": "05",
+      "archivos": 51
+    },
+    {
+      "mes": "06",
+      "archivos": 49
+    },
+    {
+      "mes": "02",
+      "archivos": 43
+    },
+    {
+      "mes": "10",
+      "archivos": 38
+    }
+  ]
+}

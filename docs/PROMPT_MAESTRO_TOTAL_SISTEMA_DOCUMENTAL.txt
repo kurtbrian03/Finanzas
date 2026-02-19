@@ -1,0 +1,286 @@
+=====================================================================
+= PROMPT MAESTRO TOTAL — SISTEMA DOCUMENTAL COMPLETO DEL PROYECTO   =
+= ARQUITECTURA • PORTAL • README • VERSIONADO • AUTOMATIZACIÓN      =
+= FORMATO MULTI-DOCS • CHANGELOG • ESTÁNDARES PROFESIONALES         =
+=====================================================================
+
+OBJETIVO DEL PROMPT
+---------------------------------------------------------------------
+Este prompt describe, explica y orquesta la creación, mantenimiento y 
+evolución de un ecosistema documental profesional, modular y escalable 
+para un proyecto de software. 
+
+Debe permitir que cualquier agente (VS Code, Copilot, Chat) o 
+desarrollador humano pueda:
+
+1. Comprender la arquitectura documental.
+2. Generar documentación en múltiples formatos.
+3. Mantener consistencia entre archivos.
+4. Regenerar documentación automáticamente.
+5. Versionar la documentación.
+6. Actualizar el portal documental.
+7. Mantener un README estilo Microsoft Docs.
+8. Mantener un CHANGELOG documental.
+9. Navegar el ecosistema documental completo.
+10. Extender o actualizar el sistema documental sin romperlo.
+
+Este prompt NO contiene los archivos completos, sino la guía maestra 
+que explica cómo funciona todo el sistema documental.
+
+
+=====================================================================
+1. VERSIONES MAESTRAS DE DOCUMENTACIÓN
+=====================================================================
+
+El sistema documental se basa en dos archivos maestros:
+
+1. ARCHIVO_MAESTRO_DOCUMENTACION_EXTENDIDA.txt  
+   - Versión completa, exhaustiva, con todos los formatos integrados.
+   - Ideal para agentes y análisis profundo.
+   - Contiene diagramas, flujos, roadmap, manual técnico y formatos.
+
+2. ARCHIVO_MAESTRO_DOCUMENTACION_OPCION_C.txt  
+   - Versión optimizada por formato:
+     - PDF y LaTeX → completos
+     - Markdown y HTML → intermedios
+     - Notion y Confluence → resumidos
+     - EPUB → ligero
+   - Ideal para exportación y publicación.
+
+Ambas versiones deben mantenerse en docs/ y versionarse en Git.
+
+
+=====================================================================
+2. PORTAL DE DOCUMENTACIÓN (INDEX_DOCUMENTACION.md)
+=====================================================================
+
+El portal documental es el punto de entrada principal del sistema.
+
+Debe incluir:
+
+- Enlaces a las versiones maestras
+- Enlaces a cada formato documental
+- Estructura de carpetas
+- Próximos pasos
+- Navegación clara estilo Microsoft Docs
+- Descripción del propósito de cada archivo
+- Mapa completo del ecosistema documental
+
+Este archivo permite:
+
+- Navegación rápida
+- Auditoría inmediata
+- Onboarding acelerado
+- Control documental centralizado
+
+
+=====================================================================
+3. README PRINCIPAL (ESTILO MICROSOFT DOCS)
+=====================================================================
+
+El README debe ser profesional, claro y estructurado.
+
+Debe incluir:
+
+1. Introducción  
+2. Arquitectura del sistema  
+3. Características principales  
+4. Enlace al portal documental  
+5. Estructura del proyecto  
+6. Cómo iniciar el proyecto  
+7. Cómo contribuir  
+8. Licencia  
+9. Contacto o equipo  
+
+El tono debe ser:
+
+- Corporativo  
+- Claro  
+- Conciso  
+- Profesional  
+- Inspirado en Microsoft Docs  
+
+Debe incluir badges:
+
+- Portal documental  
+- Versión estable  
+- Automatización  
+- Changelog  
+- Licencia  
+
+
+=====================================================================
+4. ESTRUCTURA DOCUMENTAL POR FORMATO
+=====================================================================
+
+El directorio docs contiene subcarpetas por formato:
+
+docs/
+│
+├── pdf/
+├── markdown/
+├── html/
+├── latex/
+├── notion/
+├── confluence/
+└── epub/
+
+Cada carpeta contiene un archivo base funcional:
+
+- PDF → DOCUMENTACION_INTERNA.pdf.txt  
+- Markdown → README_GITHUB.md  
+- HTML → DOCUMENTACION_WEB.html  
+- LaTeX → DOCUMENTACION_LATEX.tex  
+- Notion → NOTION_PAGE.json  
+- Confluence → DOCUMENTACION_CONFLUENCE.wiki  
+- EPUB → EPUB_CONTENT.opf, EPUB_TOC.ncx, document.xhtml  
+
+Cada archivo debe contener:
+
+- Estructura mínima  
+- Encabezados correctos  
+- Contenido base  
+- Enlaces al portal documental  
+
+
+=====================================================================
+5. SCRIPT DE AUTOMATIZACIÓN (GENERACIÓN DE FORMATOS)
+=====================================================================
+
+El sistema incluye un script conceptual que:
+
+1. Lee el archivo maestro (Opción C).
+2. Extrae cada sección correspondiente a cada formato.
+3. Regenera los archivos en docs/ sin sobrescribir manualmente.
+4. Mantiene consistencia entre formatos.
+5. Permite regenerar todo con un solo comando.
+
+El script debe:
+
+- Ser idempotente  
+- Ser seguro  
+- Ser extensible  
+- Ser documentado dentro de docs/scripts/  
+
+El script debe permitir:
+
+- Regenerar solo un formato  
+- Regenerar todos los formatos  
+- Validar integridad  
+- Registrar cambios en el CHANGELOG  
+
+
+=====================================================================
+6. SISTEMA DE VERSIONADO DOCUMENTAL
+=====================================================================
+
+El versionado documental sigue este esquema:
+
+docs/versions/
+│
+├── v1/
+├── v2/
+├── v3/
+└── latest → referencia a la versión activa
+
+Cada versión contiene:
+
+- Copia de las versiones maestras
+- Copia de los formatos generados
+- CHANGELOG asociado
+
+Reglas:
+
+- Cambios mayores → nueva versión (v3 → v4)
+- Cambios menores → subversión (v3.1 → v3.2)
+- Cambios de formato → no generan versión nueva
+- Cambios estructurales → requieren actualización del portal
+
+
+=====================================================================
+7. CHANGELOG DOCUMENTAL
+=====================================================================
+
+Archivo: docs/CHANGELOG_DOCUMENTACION.md
+
+Debe incluir:
+
+- Fecha  
+- Autor  
+- Descripción del cambio  
+- Archivos afectados  
+- Motivo del cambio  
+- Impacto en el sistema documental  
+
+Formato recomendado:
+
+## [v3.0] — 2026-02-18
+### Added
+- Nueva versión maestra Opción C
+- Portal documental avanzado
+
+### Changed
+- Estructura de carpetas reorganizada
+
+### Fixed
+- Enlaces rotos en HTML
+
+
+=====================================================================
+8. DIAGRAMAS, FLUJOS Y ARQUITECTURA
+=====================================================================
+
+El sistema documental incluye:
+
+- Diagramas ASCII  
+- Diagramas UML  
+- Flujos de análisis PDF  
+- Flujos de validación fiscal  
+- Flujos de descargas  
+- Flujo del router  
+- Estructura del proyecto  
+
+Estos diagramas deben estar presentes en:
+
+- Versiones maestras  
+- README  
+- Portal documental  
+
+
+=====================================================================
+9. ROADMAP DOCUMENTAL
+=====================================================================
+
+Corto plazo:
+- Completar scripts de automatización  
+- Añadir badges al README  
+- Integrar portal con GitHub Pages  
+
+Mediano plazo:
+- Generar documentación API  
+- Añadir ejemplos de uso  
+- Integrar pruebas de documentación  
+
+Largo plazo:
+- Migrar portal a GitBook o ReadTheDocs  
+- Integrar CI/CD documental  
+- Generar documentación dinámica con agentes   
+
+
+=====================================================================
+10. MANUAL TÉCNICO DOCUMENTAL
+=====================================================================
+
+Debe incluir:
+
+- Cómo actualizar documentación  
+- Cómo regenerar formatos  
+- Cómo crear nuevas versiones  
+- Cómo extender el portal  
+- Cómo mantener consistencia  
+- Cómo auditar documentación  
+
+
+=====================================================================
+FIN DEL PROMPT MAESTRO TOTAL — SISTEMA DOCUMENTAL COMPLETO
+=====================================================================

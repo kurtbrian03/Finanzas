@@ -1,0 +1,242 @@
+=====================================================================
+= PROMPT MAESTRO TOTAL — INTEGRACIÓN DROPBOX + DASHBOARD + IA       =
+= LECTURA • CLASIFICACIÓN • VISOR IMÁGENES • PDF VIEWER • TAGS      =
+= CLASIFICADOR AVANZADO • DOCUMENTACIÓN AUTOMÁTICA                  =
+=====================================================================
+
+OBJETIVO
+---------------------------------------------------------------------
+Generar un sistema completo que:
+
+1. Lea automáticamente todos los documentos y carpetas provenientes de Dropbox.
+2. Clasifique y asigne cada archivo a un módulo de la app.
+3. Genere un visor de imágenes para JPG/PNG.
+4. Genere un módulo de previsualización PDF.
+5. Genere un dashboard visual para navegar documentos importados.
+6. Genere un sistema de etiquetas inteligentes.
+7. Genere un clasificador avanzado con IA.
+8. Actualice la documentación del ecosistema automáticamente.
+
+El sistema debe ser modular, limpio, profesional y compatible con Windows y Linux/Mac.
+
+
+=====================================================================
+1. LECTURA AUTOMÁTICA DE CARPETA DROPBOX
+=====================================================================
+
+Crear un script en Python llamado `integrar_dropbox.py` que:
+
+1. Lea una ruta local sincronizada con Dropbox:
+   - Windows: C:\Pinpon\Dropbox\DocumentacionApp\
+   - Linux/Mac: ~/Dropbox/DocumentacionApp/
+
+2. Recorra:
+   - Todos los archivos
+   - Todas las subcarpetas
+   - Todos los tipos de archivo (PDF, DOCX, XLSX, TXT, MD, JPG, PNG, etc.)
+
+3. Obtenga metadatos:
+   - nombre_archivo
+   - ruta_completa
+   - extension
+   - tamaño
+   - fecha_modificacion
+   - tipo MIME
+
+4. Genere:
+   - docs/dropbox_mapeo_documentos.json
+   - docs/dropbox_mapeo_documentos.md
+
+5. Detecte automáticamente el tipo de documento:
+   - PDF → Documentos técnicos o legales
+   - DOCX → Manuales, contratos, textos
+   - XLSX → Especificaciones, datos
+   - TXT/MD → Notas, documentación ligera
+   - JPG/PNG → Imágenes, diagramas, fotos
+   - Otros → Sin clasificar
+
+
+=====================================================================
+2. CLASIFICACIÓN AUTOMÁTICA DE DOCUMENTOS
+=====================================================================
+
+Reglas base:
+
+- “contrato”, “legal” → Legal
+- “manual”, “uso”, “guía” → Manual de Usuario
+- “arquitectura”, “diseño” → Arquitectura
+- “especificacion”, “tecnica” → Especificación Técnica
+- PDF sin coincidencias → Documento Técnico
+- XLSX → Datos / Especificaciones
+- JPG/PNG → Imagen / Recurso Visual
+- Otros → Sin clasificar
+
+Generar archivo:
+- docs/dropbox_asignacion_app.json
+
+Asignación automática a módulos de la app:
+
+- Imágenes JPG/PNG → ui/assets/images/
+- PDFs técnicos → analysis/
+- PDFs legales → validation/legal/
+- DOCX → docs/manuales/
+- XLSX → analysis/data/
+- Otros → docs/misc/
+
+
+=====================================================================
+3. VISOR DE IMÁGENES PARA LA APP
+=====================================================================
+
+Generar módulo `image_viewer.py` que:
+
+1. Permita abrir imágenes JPG/PNG desde ui/assets/images/.
+2. Use tkinter o PIL.
+3. Muestre:
+   - Imagen
+   - Nombre
+   - Tamaño
+   - Resolución
+4. Permita navegar entre imágenes:
+   - Siguiente
+   - Anterior
+5. Sea integrable en la UI principal.
+
+
+=====================================================================
+4. PREVISUALIZACIÓN PDF
+=====================================================================
+
+Generar módulo `pdf_viewer.py` que:
+
+1. Permita abrir PDFs desde analysis/ o validation/legal/.
+2. Use PyMuPDF o pdfplumber.
+3. Muestre:
+   - Página actual
+   - Total de páginas
+   - Zoom
+   - Navegación (siguiente/anterior)
+4. Permita exportar una página como imagen.
+5. Sea integrable en la UI.
+
+
+=====================================================================
+5. DASHBOARD VISUAL PARA NAVEGAR DOCUMENTOS IMPORTADOS
+=====================================================================
+
+Generar módulo `dashboard_documentos.py` que:
+
+1. Construya una interfaz visual (tkinter o PyQt).
+2. Muestre una tabla con:
+   - Nombre del archivo
+   - Categoría
+   - Tipo
+   - Fecha de modificación
+   - Módulo asignado
+   - Etiquetas inteligentes
+3. Permita:
+   - Filtrar por categoría
+   - Filtrar por tipo
+   - Filtrar por etiquetas
+   - Abrir visor de imágenes
+   - Abrir visor PDF
+4. Incluya un panel lateral con:
+   - Estadísticas
+   - Conteo por tipo
+   - Conteo por categoría
+   - Conteo por etiquetas
+5. Sea integrable en la app.
+
+
+=====================================================================
+6. SISTEMA DE ETIQUETAS INTELIGENTES
+=====================================================================
+
+Generar módulo `tagging_engine.py` que:
+
+1. Asigne etiquetas automáticamente según:
+   - Nombre del archivo
+   - Tipo de archivo
+   - Contenido (si es texto)
+   - Metadatos
+2. Ejemplos de etiquetas:
+   - “legal”
+   - “manual”
+   - “arquitectura”
+   - “imagen”
+   - “pdf”
+   - “xlsx”
+   - “importado-dropbox”
+   - “sin-clasificar”
+3. Permita añadir etiquetas manualmente.
+4. Permita editar y eliminar etiquetas.
+5. Se integre con el dashboard.
+
+
+=====================================================================
+7. CLASIFICADOR AVANZADO CON IA
+=====================================================================
+
+Generar módulo `ai_classifier.py` que:
+
+1. Use un modelo local o API (placeholder) para:
+   - Leer contenido de PDFs
+   - Leer texto de DOCX
+   - Leer texto de TXT/MD
+   - Extraer texto de imágenes (OCR opcional)
+2. Clasifique documentos según:
+   - Tema
+   - Dominio
+   - Complejidad
+   - Tipo de información
+3. Genere sugerencias de:
+   - Categoría
+   - Etiquetas
+   - Módulo destino
+4. Se integre con:
+   - tagging_engine.py
+   - dashboard_documentos.py
+   - integrar_dropbox.py
+
+
+=====================================================================
+8. DOCUMENTACIÓN AUTOMÁTICA
+=====================================================================
+
+El sistema debe actualizar automáticamente:
+
+1. docs/INDEX_DOCUMENTACION.md  
+   - Nueva sección: “Documentos importados desde Dropbox”
+   - Nueva sección: “Dashboard visual”
+   - Nueva sección: “Clasificador IA”
+   - Nueva sección: “Visor PDF”
+   - Nueva sección: “Etiquetas inteligentes”
+
+2. docs/markdown/  
+   - Crear archivo: DROPBOX_IMPORT.md
+
+3. docs/versions/  
+   - Copiar mapeos en la versión activa
+
+4. CHANGELOG_DOCUMENTACION.md  
+   - Registrar cambios generados por el script
+
+
+=====================================================================
+9. REQUISITOS DEL CÓDIGO
+=====================================================================
+
+- Código limpio
+- Comentarios descriptivos
+- Logs claros
+- Manejo de errores
+- Idempotencia
+- No sobrescribir archivos no relacionados
+- Compatible con Windows y Linux/Mac
+- Arquitectura modular
+- Integración con la app existente
+
+
+=====================================================================
+FIN DEL PROMPT MAESTRO TOTAL — DROPBOX + DASHBOARD + IA
+=====================================================================
