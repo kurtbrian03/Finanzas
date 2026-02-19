@@ -35,9 +35,9 @@ if ($installerBusy) {
     Write-Host "Windows Installer está libre." -ForegroundColor Green
 }
 
-# 4. Ejecutar setup del agente (ruta relativa al repo)
+# 4. Ejecutar setup del agente (ruta relativa al directorio del propio script)
 Write-Host "`n[4/5] Ejecutando setup del agente (scripts/setup_agent_environment.ps1)..." -ForegroundColor Cyan
-$setupScript = Join-Path -Path (Get-Location) -ChildPath "scripts/setup_agent_environment.ps1"
+$setupScript = Join-Path -Path $PSScriptRoot -ChildPath "setup_agent_environment.ps1"
 if (-Not (Test-Path $setupScript)) {
     Write-Host "No se encontró scripts/setup_agent_environment.ps1 en el directorio actual: $setupScript" -ForegroundColor Red
     exit 3

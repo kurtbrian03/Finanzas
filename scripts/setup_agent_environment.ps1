@@ -70,6 +70,8 @@ version: "1.0.0"
 instructions: knowledge/instructions.md
 knowledge:
   - knowledge/
+actions:
+  - actions/
 "@
                 Set-Content -Path $fullPath -Value $template -Encoding UTF8
             }

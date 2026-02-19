@@ -86,11 +86,59 @@ git submodule update --init --recursive
 pwsh ./pinpon/<script>.ps1
 ```
 
-## 8. Licencia
+## 8. Configuración del agente declarativo PINPON
+
+El agente declarativo PINPON permite a GitHub Copilot Chat operar con contexto específico de este repositorio: análisis documental, validación fiscal y automatización operativa.
+
+### Archivos clave del agente
+
+| Archivo / Directorio | Rol |
+|---|---|
+| `agent.yaml` | Configuración principal del agente (nombre, instrucciones, knowledge, actions) |
+| `agent.local.settings.json` | Ajustes locales del entorno (logLevel, rutas) |
+| `knowledge/instructions.md` | Prompt de sistema del agente (alcance y directrices) |
+| `knowledge/` | Archivos de contexto que el agente puede consultar |
+| `actions/` | Definiciones de acciones externas (OpenAPI, si aplica) |
+| `scripts/unblock_and_setup_agent.ps1` | Desbloquea Windows Installer y lanza el setup del agente |
+| `scripts/setup_agent_environment.ps1` | Detecta/instala Node.js y verifica los archivos base del agente |
+
+### Scripts de setup
+
+- **`scripts/unblock_and_setup_agent.ps1`** — ejecutar con privilegios de administrador. Hace cinco pasos en orden:
+  1. Detiene procesos `msiexec` bloqueantes.
+  2. Reinicia el servicio `msiserver`.
+  3. Verifica que Windows Installer esté libre.
+  4. Llama a `scripts/setup_agent_environment.ps1`.
+  5. Valida la presencia de `node` y `npm`.
+
+- **`scripts/setup_agent_environment.ps1`** — configura el entorno del agente:
+  - Detecta `node`/`npm`; intenta instalar Node.js LTS vía `winget` si falta.
+  - Crea `agent.yaml`, `agent.local.settings.json`, `knowledge/` y `actions/` si no existen.
+  - Muestra un resumen final del entorno.
+
+### Cómo ejecutar desde VS Code
+
+En VS Code abre la paleta de tareas (`Ctrl+Shift+P` → **Tasks: Run Task**) y selecciona:
+
+```
+Pinpon: Unblock Installer and Setup Agent
+```
+
+La tarea lanza `scripts/unblock_and_setup_agent.ps1` con privilegios elevados (`Start-Process pwsh -Verb RunAs`).
+
+### Qué esperar al finalizar
+
+- `node` y `npm` detectados (o instrucciones para instalarlos manualmente).
+- `agent.yaml`, `agent.local.settings.json`, `knowledge/` y `actions/` presentes en la raíz del repo.
+- Salida de consola con estado `OK` para cada componente.
+
+> **Nota:** Si `node` no está instalado y `winget` no está disponible, descarga Node.js LTS manualmente desde <https://nodejs.org> e instálalo como administrador. Luego vuelve a ejecutar la tarea.
+
+## 9. Licencia
 
 Pendiente de definición formal (`MIT` o `Privada`, según lineamiento del proyecto).
 
-## 9. Auditoría en CI/CD
+## 10. Auditoría en CI/CD
 
 Ejecución recomendada de auditoría automática en pipeline:
 
@@ -110,7 +158,7 @@ Ejecución recomendada de auditoría automática en pipeline:
 
 El script `dropbox_integration/audit_ci.py` retorna `exit 0` si la política pasa y `exit 1` si detecta degradación por encima de umbral.
 
-## 10. Contacto o equipo
+## 11. Contacto o equipo
 
 Equipo de mantenimiento del repositorio `Finanzas` (owner y maintainers del proyecto).
 
