@@ -1,0 +1,6 @@
+name: pinpon-agent
+instructions: knowledge/instructions.md
+knowledge:
+  - knowledge/
+actions:
+  - actions/
