@@ -1,0 +1,86 @@
+stages:
+  - test
+  - build
+  - publish
+  - sync
+
+default:
+  image: python:3.11
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+
+test:
+  stage: test
+  script:
+    - python -m pytest --import-mode=importlib -q tests --junitxml test-results.xml
+    - |
+      python - <<'PY'
+      from pinpon_marketplace.installer import list_available_modules
+      from pinpon_modules import load_module
+
+      modules = list_available_modules()
+      if not modules:
+          print("Marketplace vacío: se permite continuar")
+          raise SystemExit(0)
+
+      failures = []
+      for module in modules:
+          if module.get("installation_mode") == "none":
+              continue
+          try:
+              load_module(module["id"])
+          except Exception as exc:
+              failures.append((module["id"], str(exc)))
+
+      if failures:
+          raise SystemExit(f"Loader con errores: {failures}")
+
+      print("Marketplace + loader OK")
+      PY
+  artifacts:
+    when: always
+    paths:
+      - test-results.xml
+
+build:
+  stage: build
+  script:
+    - cd pinpon_modulo_compras
+    - python -m pip install build
+    - python -m build
+  artifacts:
+    paths:
+      - pinpon_modulo_compras/dist/
+
+publish:
+  stage: publish
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/ && $PYPI_TOKEN != null && $PYPI_TOKEN != ""'
+      when: on_success
+    - when: never
+  script:
+    - pwsh ./scripts/publish_pip_compras.ps1 -Root "$CI_PROJECT_DIR"
+
+sync:
+  stage: sync
+  when: manual
+  script:
+    - |
+      if [ -f .gitmodules ]; then
+        git submodule sync --recursive
+        git submodule update --init --remote --recursive
+        git submodule status --recursive
+      else
+        echo "No .gitmodules, nothing to sync"
+      fi
+
+create_remote_repo:
+  stage: sync
+  rules:
+    - if: '$GITHUB_TOKEN != null && $GITHUB_TOKEN != ""'
+      when: manual
+    - when: never
+  script:
+    - apt-get update && apt-get install -y powershell
+    - pwsh ./scripts/create_remote_repo.ps1

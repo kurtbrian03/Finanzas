@@ -1,0 +1,62 @@
+{
+  "agent": {
+    "name": "PINPON Copilot Agent",
+    "id": "pinpon-agent",
+    "version": "0.1.0",
+    "description": "Declarative Agent de Microsoft 365 Copilot para operaciones del ecosistema Pinpon.",
+    "instructions": [
+      "Actúa como asistente operativo para validación de CI/CD, marketplace y módulos ERP.",
+      "Prioriza seguridad, idempotencia y trazabilidad de cambios.",
+      "No ejecutes acciones destructivas sin confirmación explícita."
+    ],
+    "capabilities": {
+      "reasoning": true,
+      "file_context": true,
+      "workflow_context": true,
+      "knowledge_grounding": true
+    },
+    "actions": {
+      "source": "./actions.yaml",
+      "available": [
+        "run_local_ci",
+        "validate_checklist",
+        "analyze_marketplace",
+        "summarize_pr_state"
+      ]
+    },
+    "knowledge": {
+      "source": "./knowledge.yaml"
+    },
+    "connections": {
+      "github": {
+        "enabled": true,
+        "endpoint": "https://api.github.com",
+        "auth_env": "GITHUB_TOKEN"
+      },
+      "pinpon_local": {
+        "enabled": true,
+        "workspace_env": "PINPON_WORKSPACE"
+      }
+    },
+    "security": {
+      "allow_external_http": false,
+      "allow_shell_execution": true,
+      "mask_sensitive_env": true,
+      "sensitive_env_keys": [
+        "GITHUB_TOKEN",
+        "PYPI_TOKEN",
+        "OPENAI_API_KEY"
+      ]
+    },
+    "context": {
+      "default_language": "es-MX",
+      "timezone": "America/Mexico_City",
+      "project": "Finanzas",
+      "erp_modules": [
+        "compras",
+        "ventas",
+        "inventarios"
+      ]
+    }
+  }
+}

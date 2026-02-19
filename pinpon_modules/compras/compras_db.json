@@ -1,0 +1,12 @@
+{
+  "proveedores": [],
+  "ordenes_compra": [],
+  "recepciones": [],
+  "cuentas_por_pagar": [],
+  "next_ids": {
+    "proveedores": 1,
+    "ordenes_compra": 1,
+    "recepciones": 1,
+    "cuentas_por_pagar": 1
+  }
+}

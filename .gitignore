@@ -1,0 +1,177 @@
+# ================================================================
+# .gitignore — Proyecto Finanzas (Python + Streamlit + VS Code)
+# ================================================================
+# Objetivo:
+# - Mantener el repositorio limpio y auditable.
+# - Evitar commits accidentales de archivos temporales, pesados o sensibles.
+# - Versionar solo código fuente, documentación y artefactos realmente necesarios.
+
+# ----------------------------------------------------------------
+# 1) Entornos virtuales y tooling local de Python
+# ----------------------------------------------------------------
+# Se excluyen entornos locales para evitar subir dependencias binarias
+# o rutas específicas de la máquina del desarrollador.
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ----------------------------------------------------------------
+# 2) Cachés y artefactos de ejecución de Python
+# ----------------------------------------------------------------
+# Archivos generados automáticamente por el intérprete, pruebas y cobertura.
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# ----------------------------------------------------------------
+# 3) Build, empaquetado y distribución
+# ----------------------------------------------------------------
+# Artefactos de build no deben versionarse.
+build/
+dist/
+site/
+*.egg-info/
+.eggs/
+*.whl
+pip-wheel-metadata/
+
+# ----------------------------------------------------------------
+# 4) Streamlit (configuración local y secretos)
+# ----------------------------------------------------------------
+# Se evita subir secretos y configuraciones locales por entorno.
+.streamlit/
+
+# ----------------------------------------------------------------
+# 5) Visual Studio Code y configuración local de editor
+# ----------------------------------------------------------------
+# Se ignora configuración local del workspace.
+# Nota: si desean compartir extensiones recomendadas, descomentar la línea de abajo.
+.vscode/
+# !.vscode/extensions.json
+
+# Artefactos de pruebas/extensiones de VS Code y navegación local.
+.vscode-test/
+.history/
+
+# ----------------------------------------------------------------
+# 6) Logs, temporales, backups y locks
+# ----------------------------------------------------------------
+# Evita ruido de ejecución y archivos transitorios.
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.swp
+*.swo
+*~
+~$*
+*.lock
+
+# ----------------------------------------------------------------
+# 7) Archivos sensibles y secretos
+# ----------------------------------------------------------------
+# Nunca versionar credenciales o archivos de secretos locales.
+.env
+.env.*
+!.env.example
+secrets.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# ----------------------------------------------------------------
+# 8) OneDrive / sincronización y conflictos
+# ----------------------------------------------------------------
+# Archivos generados por conflictos o estado de sincronización.
+*conflict*
+*conflicted copy*
+*sync-conflict*
+*.odopen
+*.onetmp
+*.tmp.drivedownload
+
+# ----------------------------------------------------------------
+# 9) Sistema operativo (Windows / macOS / Linux)
+# ----------------------------------------------------------------
+# Basura de sistema y metadatos de explorador.
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*/
+.nfs*
+
+# ----------------------------------------------------------------
+# 10) Datos locales y carpetas de trabajo no versionables
+# ----------------------------------------------------------------
+# Datos locales/experimentales o temporales de ejecución.
+data/
+datasets/
+temp/
+tmp/
+cache/
+
+# ----------------------------------------------------------------
+# 11) Reportes y exportaciones generadas automáticamente
+# ----------------------------------------------------------------
+# Se ignoran outputs de reportes para evitar commits masivos accidentales.
+# Ajustado al historial de exportes del proyecto.
+docs/reportes/
+reports/
+exports/
+output/
+outputs/
+
+# Patrones de exportes automáticos (solo en rutas de salida conocidas)
+reports/**/*.csv
+reports/**/*.xlsx
+reports/**/*.xls
+reports/**/*.pdf
+reports/**/*.zip
+outputs/**/*.csv
+outputs/**/*.xlsx
+outputs/**/*.xls
+outputs/**/*.pdf
+outputs/**/*.zip
+
+# ----------------------------------------------------------------
+# 12) Jupyter y notas locales (si aparecen en desarrollo)
+# ----------------------------------------------------------------
+.ipynb_checkpoints/
+
+# ----------------------------------------------------------------
+# 13) Recomendación de assets oficiales
+# ----------------------------------------------------------------
+# Recomendación: colocar imágenes oficiales/versionadas del proyecto en /assets
+# para distinguirlas de imágenes temporales o de debugging.
+# Si /assets existe, su contenido se puede versionar normalmente.
+# (No se ignora /assets intencionalmente.)

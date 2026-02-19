@@ -1,0 +1,149 @@
+{
+  "actions": [
+    {
+      "name": "run_local_ci",
+      "description": "Ejecuta validaciones locales del ecosistema Pinpon.",
+      "method": "shell",
+      "entrypoint": "pwsh ./scripts/ci_local.ps1 -Root .",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "run_auto_keep": {
+            "type": "boolean",
+            "default": false
+          },
+          "run_agent_validation": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "object"
+          }
+        }
+      },
+      "validations": [
+        "workspace_exists",
+        "powershell_available"
+      ],
+      "errors": [
+        {
+          "code": "E_WORKSPACE",
+          "message": "No se encontró el workspace de Pinpon."
+        },
+        {
+          "code": "E_CI",
+          "message": "La ejecución de ci_local.ps1 falló."
+        }
+      ]
+    },
+    {
+      "name": "validate_checklist",
+      "description": "Valida checklist de PR de forma no bloqueante.",
+      "method": "shell",
+      "entrypoint": "pwsh ./scripts/validate_checklist.ps1",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "pr_title": {
+            "type": "string"
+          },
+          "pr_body": {
+            "type": "string"
+          }
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "unchecked": {
+            "type": "integer"
+          },
+          "checked": {
+            "type": "integer"
+          }
+        }
+      },
+      "validations": [
+        "pull_request_payload_optional"
+      ],
+      "errors": [
+        {
+          "code": "E_CHECKLIST",
+          "message": "No fue posible validar el checklist."
+        }
+      ]
+    },
+    {
+      "name": "analyze_marketplace",
+      "description": "Inspecciona estado de módulos marketplace y loader dinámico.",
+      "method": "python",
+      "entrypoint": "python -m pytest --import-mode=importlib -q tests/test_marketplace.py",
+      "inputs": {
+        "type": "object",
+        "properties": {}
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "validations": [
+        "python_env_available"
+      ],
+      "errors": [
+        {
+          "code": "E_MARKETPLACE",
+          "message": "No fue posible validar marketplace."
+        }
+      ]
+    },
+    {
+      "name": "summarize_pr_state",
+      "description": "Genera resumen operativo del estado del PR activo.",
+      "method": "internal",
+      "inputs": {
+        "type": "object",
+        "properties": {
+          "include_checks": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "changed_files": {
+            "type": "integer"
+          },
+          "checks": {
+            "type": "array"
+          }
+        }
+      },
+      "validations": [
+        "repository_context_available"
+      ],
+      "errors": [
+        {
+          "code": "E_PR_SUMMARY",
+          "message": "No fue posible generar resumen del PR."
+        }
+      ]
+    }
+  ]
+}

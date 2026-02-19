@@ -1,0 +1,106 @@
+name: PINPON Publish Pip
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Build and Publish pip package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias base
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validar metadatos de paquete
+        shell: pwsh
+        run: |
+          if (-not (Test-Path pinpon_modulo_compras/pyproject.toml)) {
+            throw "No existe pinpon_modulo_compras/pyproject.toml"
+          }
+          if (-not (Test-Path pinpon_modulo_compras/setup.cfg)) {
+            throw "No existe pinpon_modulo_compras/setup.cfg"
+          }
+          Write-Host "Metadatos de paquete OK"
+
+      - name: Validar imports relativos
+        shell: pwsh
+        run: |
+          @'
+          from pathlib import Path
+
+          base = Path("pinpon_modulo_compras/pinpon_modulo_compras")
+          py_files = list(base.rglob("*.py"))
+          if not py_files:
+              raise SystemExit("No hay archivos Python en el paquete")
+
+          relative_like = 0
+          for f in py_files:
+              text = f.read_text(encoding="utf-8")
+              if "from ." in text or "import ." in text:
+                  relative_like += 1
+
+          print(f"Archivos Python revisados: {len(py_files)}")
+          print(f"Archivos con imports relativos detectados: {relative_like}")
+          '@ | python -
+
+      - name: Publicar paquete Compras en PyPI (opcional)
+        shell: pwsh
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN || '' }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PYPI_TOKEN)) {
+            Write-Host "[WARN] PYPI_TOKEN no configurado. Se omite publicación pip."
+            exit 0
+          }
+
+          ./scripts/publish_pip_compras.ps1 -Root $PWD.Path
+
+      - name: Validar integración marketplace
+        shell: pwsh
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          from pinpon_marketplace.installer import list_available_modules
+
+          modules = list_available_modules()
+          compras = next((m for m in modules if m.get("id") == "erp_compras"), None)
+          registry = Path("pinpon_marketplace/registry.json")
+
+          if compras is None and registry.exists():
+              payload = json.loads(registry.read_text(encoding="utf-8"))
+              found = any(item.get("id") == "erp_compras" for item in payload if isinstance(item, dict))
+              if not found:
+                  raise SystemExit("Registry no contiene erp_compras")
+              mode = "none"
+          elif compras is not None:
+              mode = compras.get("installation_mode")
+          else:
+              mode = "none"
+
+          print(f"Marketplace OK para erp_compras: mode={mode}")
+          '@ | python -
+
+      - name: Publicar artefactos de build
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinpon-pip-dist
+          path: pinpon_modulo_compras/dist/**
+          if-no-files-found: warn

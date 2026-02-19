@@ -1,0 +1,10 @@
+[project]
+name = "pinpon-modulo-compras"
+version = "0.1.0"
+description = "Módulo ERP de Compras para Pinpon"
+authors = [{ name = "Brian" }]
+dependencies = ["streamlit", "pydantic"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

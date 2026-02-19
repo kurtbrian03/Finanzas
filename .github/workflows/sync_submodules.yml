@@ -1,0 +1,95 @@
+name: PINPON Sync Submodules
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync submodules
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validar .gitmodules
+        shell: pwsh
+        run: |
+          if (-not (Test-Path .gitmodules)) {
+            Write-Host "[INFO] No hay .gitmodules. Nada que sincronizar."
+            exit 0
+          }
+
+          git config --file .gitmodules --get-regexp path | Out-Host
+          Write-Host "[INFO] .gitmodules válido"
+
+      - name: Sincronizar y actualizar submódulos
+        shell: pwsh
+        run: |
+          if (-not (Test-Path .gitmodules)) {
+            exit 0
+          }
+
+          git submodule sync --recursive
+          git submodule update --init --remote --recursive
+
+      - name: Detectar divergencias
+        shell: pwsh
+        run: |
+          if (-not (Test-Path .gitmodules)) {
+            exit 0
+          }
+
+          $statusLines = git submodule status --recursive
+          $divergences = @()
+          foreach ($line in $statusLines) {
+            if ($line.StartsWith("+") -or $line.StartsWith("-") -or $line.StartsWith("U")) {
+              $divergences += $line
+            }
+          }
+
+          if ($divergences.Count -gt 0) {
+            Write-Host "::warning::Se detectaron divergencias en submódulos"
+            $divergences | ForEach-Object { Write-Host "  $_" }
+          }
+          else {
+            Write-Host "[INFO] Submódulos sincronizados sin divergencias"
+          }
+
+          $pathsRaw = git config --file .gitmodules --get-regexp path
+          $paths = @()
+          foreach ($row in $pathsRaw) {
+            $parts = "$row".Split(" ", 2)
+            if ($parts.Count -eq 2) {
+              $paths += $parts[1].Trim()
+            }
+          }
+
+          foreach ($subPath in $paths) {
+            $dirty = git -C $subPath status --porcelain
+            if ($dirty) {
+              Write-Host "::warning::Cambios locales no sincronizados en $subPath"
+            }
+
+            $upstream = git -C $subPath rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>$null
+            if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($upstream)) {
+              Write-Host "::warning::Submódulo $subPath sin upstream configurado"
+              continue
+            }
+
+            $counts = git -C $subPath rev-list --left-right --count HEAD...$upstream
+            if ($counts -match '^(\d+)\s+(\d+)$') {
+              $behind = [int]$Matches[1]
+              $ahead = [int]$Matches[2]
+              if ($ahead -gt 0 -or $behind -gt 0) {
+                Write-Host "::warning::Submódulo $subPath desfasado (behind=$behind ahead=$ahead)"
+              }
+            }
+          }

@@ -25,6 +25,7 @@ try:
 except Exception:
     load_dotenv = None
 
+from config import DEBUG_MODE
 from core.state_manager import StateManager
 from dropbox_integration.analytics_engine import analizar_documentos, construir_resumen_analitico
 from dropbox_integration.audit_diff import (
@@ -1486,6 +1487,11 @@ def render_dropbox_explorer(state: StateManager, carpeta: Path) -> None:
         logging.warning("DROPBOX_ADMIN_PASS no está definida o está vacía")
 
     is_session_active = bool(st.session_state.get("dropbox_explorer_auth_ok", False))
+    if DEBUG_MODE:
+        with st.expander("🔧 DEBUG – Estado interno (solo desarrollo)", expanded=False):
+            st.write("is_session_active:", is_session_active)
+            st.write("autenticado:", st.session_state.get("autenticado"))
+            st.write("rol:", st.session_state.get("rol"))
     is_admin_active = (
         is_session_active
         and str(st.session_state.get("dropbox_explorer_auth_role", "")) == "Administrador"

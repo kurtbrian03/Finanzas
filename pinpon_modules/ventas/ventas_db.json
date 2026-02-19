@@ -1,0 +1,14 @@
+{
+  "clientes": [],
+  "cotizaciones": [],
+  "pedidos": [],
+  "facturas_emitidas": [],
+  "cobranzas": [],
+  "next_ids": {
+    "clientes": 1,
+    "cotizaciones": 1,
+    "pedidos": 1,
+    "facturas_emitidas": 1,
+    "cobranzas": 1
+  }
+}

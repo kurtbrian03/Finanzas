@@ -1,0 +1,21 @@
+# Copilot Instructions
+
+- Big picture: Streamlit app entry [app.py](app.py#L9-L93) arranca tema/UI, construye handlers y delega al router central; capas descritas en [docs/ARCHITECTURE_DIAGRAM.md](docs/ARCHITECTURE_DIAGRAM.md#L1-L78) y [docs/arquitectura.md](docs/arquitectura.md#L1-L26).
+- Routing: tabla canónica en [config/constants.py](config/constants.py#L21-L38); despachador valida rutas y eventos en [core/router.py](core/router.py#L15-L42). Al agregar pantalla, crea handler en [app.py](app.py#L75-L89) y mapea etiqueta en `RUTAS_APP`.
+- ERP dinámico: módulos adicionales se cargan desde `pinpon_modules` a través de `_build_erp_handlers()` en [app.py](app.py#L37-L55); registrar clave en `ERP_MODULES` en [config/constants.py](config/constants.py#L9-L19) para habilitar en sidebar.
+- Estado: usar `StateManager` para todo acceso a `st.session_state`; inicializa logs/historial/cfg/events/errors en [core/state_manager.py](core/state_manager.py#L13-L35). No crear claves ad hoc sin pasar por este wrapper.
+- Config/UI: metadatos y layout se toman de [config/settings.py](config/settings.py#L1-L19); arranque estándar via `bootstrap_app` en [core/lifecycle.py](core/lifecycle.py#L13-L20) y barra lateral+tema antes de routing en [app.py](app.py#L58-L88).
+- Layout/UI modules: páginas se renderizan mediante funciones en `ui/layout.py`, `ui/components.py`, `ui/navigation.py` y dashboards especializados como [ui/dashboard_facturas_receptor.py](ui/dashboard_facturas_receptor.py) (seguir patrón de inyección de `state` y `Path`).
+- Document/analysis layer: analizadores en `analysis/` (PDF/Excel/XML), validadores en `validation/`, descargas en `downloads/`, histórico en `history/`. Mantén funciones puras y sin efectos de UI; usar `Path` y no rutas en string.
+- Configuración sensible: claves requeridas para validadores en [README.md](README.md#L30-L42); mantener paths/credenciales fuera del repo (usar `.env`/settings locales).
+- Setup habitual: `pwsh ./init_project_structure.ps1`, luego `pwsh ./setup_pinpon.ps1 -Yes`; validación global con `pwsh ./validate_all.ps1` (orquesta validadores listados en [README.md](README.md#L18-L29)).
+- Pruebas: `pwsh ./scripts/run_tests.ps1` o `python -m pytest -q tests`; suite principal en `tests/` con foco en validadores, setup y CI/CD.
+- CI/CD: pipeline descrito en [docs/ci_cd.md](docs/ci_cd.md#L1-L34); CI ejecuta build→validate→test→security en cualquier push/PR a main; CD despliega tras CI verde en main usando `scripts/deploy.ps1`.
+- Mantenimiento: builds con `scripts/build.ps1`, validadores en `scripts/run_all_validators.ps1`, rollback/cleanup con `reset_pinpon.ps1` (ver modos en [docs/mantenimiento.md](docs/mantenimiento.md#L1-L20)).
+- Agente Pinpon (M365 Copilot): estructura declarativa y guías en [agent_pinpon/README_AGENT.md](agent_pinpon/README_AGENT.md#L1-L60); al extender, registrar acciones en `actions.yaml` y `agent.yaml`, fuentes en `knowledge.yaml`, y usar `scripts/init_agent.ps1 -Root . -ValidationOnly` para validar.
+- Setup del agente (Windows): ejecutar [scripts/unblock_and_setup_agent.ps1](scripts/unblock_and_setup_agent.ps1) para liberar Windows Installer y llamar `scripts/setup_agent_environment.ps1` (Admin). Existe tarea VS Code "Pinpon: Unblock Installer and Setup Agent" en [.vscode/tasks.json](.vscode/tasks.json) que levanta pwsh con UAC.
+- Datos locales: la app exige carpeta FACTURACION válida; en [app.py](app.py#L64-L74) se valida antes de renderizar. Maneja rutas con `Path` y evita side effects fuera de `state`/logs.
+- Eventos y logging: usa `publish_event` (core/event_bus.py) y `StateManager.append_log/append_event/append_error` para trazabilidad; el pie de página lee longitud de logs en [app.py](app.py#L88-L89).
+- Idioma/convenios: código y UI en español, preferir nombres explícitos y mensajes orientados a usuario; mantener scripts PowerShell idempotentes y con `-ErrorAction` configurado como en scripts existentes.
+
+Si falta contexto o hay flujos que deban documentarse mejor, dime qué parte requiere más detalle y lo ajusto.

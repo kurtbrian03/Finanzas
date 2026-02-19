@@ -1,0 +1,17 @@
+REPORTE ANALÍTICO DOCUMENTAL
+Fecha: 2026-02-19T11:55:46
+
+Total archivos: 768
+Total bytes: 72350524
+PDF páginas: 756
+Excel hojas: 41
+Imágenes con logo probable: 43
+Palabras en texto: 14562
+Entradas ZIP: 4
+
+Conteo por tipo:
+- EXCEL: 9
+- IMAGEN: 236
+- PDF: 519
+- TEXTO: 1
+- ZIP: 3

@@ -1,0 +1,214 @@
+trigger:
+  branches:
+    include:
+      - "*"
+
+pr:
+  branches:
+    include:
+      - "*"
+
+variables:
+  pythonVersion: "3.11"
+  runPublishPip: "false"
+  runSyncSubmodules: "false"
+  runCreateRemoteRepo: "false"
+
+stages:
+  - stage: test
+    displayName: Test + Validate
+    jobs:
+      - job: tests_matrix
+        displayName: Tests (Windows + Linux)
+        strategy:
+          matrix:
+            linux:
+              vmImage: ubuntu-latest
+            windows:
+              vmImage: windows-latest
+        pool:
+          vmImage: $(vmImage)
+        steps:
+          - checkout: self
+            fetchDepth: "0"
+            submodules: recursive
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: $(pythonVersion)
+
+          - task: PowerShell@2
+            displayName: Install dependencies
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                python -m pip install --upgrade pip
+                python -m pip install -r requirements.txt
+
+          - task: PowerShell@2
+            displayName: Validate submodules
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                if (Test-Path .gitmodules) {
+                  git config --file .gitmodules --get-regexp path
+                  git submodule sync --recursive
+                  git submodule status --recursive
+                }
+
+          - task: PowerShell@2
+            displayName: Validate marketplace + loader
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                @'
+                from pinpon_marketplace.installer import list_available_modules
+                from pinpon_modules import load_module
+
+                modules = list_available_modules()
+                if not modules:
+                    print("Marketplace vacío: se permite continuar")
+                    raise SystemExit(0)
+
+                failures = []
+                for module in modules:
+                    if module.get("installation_mode") == "none":
+                        continue
+                    try:
+                        load_module(module["id"])
+                    except Exception as exc:
+                        failures.append((module["id"], str(exc)))
+
+                if failures:
+                    raise SystemExit(f"Loader con errores: {failures}")
+
+                print("Marketplace + loader OK")
+                '@ | python -
+
+          - task: PowerShell@2
+            displayName: Run pytest with importlib
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                python -m pytest --import-mode=importlib -q tests --junitxml test-results-$(Agent.OS).xml
+
+          - task: PowerShell@2
+            displayName: Run integrated test runner
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                ./scripts/run_tests.ps1 -Root $PWD.Path
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish CI logs
+            condition: always()
+            inputs:
+              targetPath: $(Build.SourcesDirectory)
+              artifact: pinpon-ci-$(Agent.OS)
+              publishLocation: pipeline
+
+  - stage: build
+    displayName: Build pip package
+    dependsOn: test
+    jobs:
+      - job: build_pip
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: $(pythonVersion)
+
+          - task: PowerShell@2
+            displayName: Build pinpon_modulo_compras
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                Push-Location pinpon_modulo_compras
+                python -m pip install --upgrade pip
+                python -m pip install build
+                python -m build
+                Pop-Location
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish dist artifact
+            inputs:
+              targetPath: $(Build.SourcesDirectory)/pinpon_modulo_compras/dist
+              artifact: pinpon-pip-dist
+              publishLocation: pipeline
+
+  - stage: publish
+    displayName: Optional publish + remote
+    dependsOn: build
+    condition: and(succeeded(), or(eq(variables['runPublishPip'], 'true'), eq(variables['runCreateRemoteRepo'], 'true')))
+    jobs:
+      - job: optional_ops
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          PYPI_TOKEN: $(PYPI_TOKEN)
+          GITHUB_TOKEN: $(GITHUB_TOKEN)
+        steps:
+          - checkout: self
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: $(pythonVersion)
+
+          - task: PowerShell@2
+            displayName: Optional create remote repo
+            condition: eq(variables['runCreateRemoteRepo'], 'true')
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                if ([string]::IsNullOrWhiteSpace("$(GITHUB_TOKEN)")) {
+                  Write-Host "[WARN] GITHUB_TOKEN vacío, se omite create_remote_repo"
+                  exit 0
+                }
+                ./scripts/create_remote_repo.ps1
+
+          - task: PowerShell@2
+            displayName: Optional publish pip
+            condition: eq(variables['runPublishPip'], 'true')
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                if ([string]::IsNullOrWhiteSpace("$(PYPI_TOKEN)")) {
+                  Write-Host "[WARN] PYPI_TOKEN vacío, se omite publish"
+                  exit 0
+                }
+                ./scripts/publish_pip_compras.ps1 -Root $PWD.Path
+
+  - stage: sync
+    displayName: Optional submodule sync
+    dependsOn: test
+    condition: and(succeeded(), eq(variables['runSyncSubmodules'], 'true'))
+    jobs:
+      - job: sync_submodules
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: "0"
+
+          - task: PowerShell@2
+            displayName: Sync submodules
+            inputs:
+              pwsh: true
+              targetType: inline
+              script: |
+                if (-not (Test-Path .gitmodules)) {
+                  Write-Host "[INFO] Sin .gitmodules; nada que sincronizar"
+                  exit 0
+                }
+                git submodule sync --recursive
+                git submodule update --init --remote --recursive
+                git submodule status --recursive

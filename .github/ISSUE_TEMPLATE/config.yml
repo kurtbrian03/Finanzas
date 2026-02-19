@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: PR Template General (default)
+    url: https://github.com/kurtbrian03/Finanzas/blob/main/.github/PULL_REQUEST_TEMPLATE.md
+    about: Plantilla general de Pull Request para cambios no clasificados.
+  - name: PR Template CI/CD
+    url: https://github.com/kurtbrian03/Finanzas/blob/main/.github/PULL_REQUEST_TEMPLATE/ci_cd.md
+    about: Usa esta plantilla para cambios de workflows/pipelines/scripts de CI.
+  - name: PR Template Marketplace
+    url: https://github.com/kurtbrian03/Finanzas/blob/main/.github/PULL_REQUEST_TEMPLATE/marketplace.md
+    about: Usa esta plantilla para cambios de marketplace ERP.
+  - name: PR Template Loader/Submodule/Pip/ERP
+    url: https://github.com/kurtbrian03/Finanzas/tree/main/.github/PULL_REQUEST_TEMPLATE
+    about: Selección manual de plantilla desde Web UI/VS Code para cambios especializados.

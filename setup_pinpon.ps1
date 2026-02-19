@@ -1,67 +1,45 @@
-# setup_pinpon.ps1
-# Orquestador para regenerar y validar el entorno PINPON. No se ejecuta nada sin confirmacion.
-
 param(
-    [switch]$yes,
-    [string]$root = (Get-Location).Path
+    [string]$Root = (Get-Location).Path,
+    [switch]$Yes
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-function Write-Info($m){ Write-Host "[INFO] $m" -ForegroundColor Cyan }
-function Write-Warn($m){ Write-Host "[WARN] $m" -ForegroundColor Yellow }
-function Write-Err ($m){ Write-Host "[ERR ] $m" -ForegroundColor Red }
-
-$logFile = Join-Path $root "setup_pinpon.log"
-function Log($m){ $ts = Get-Date -Format "yyyy-MM-dd HH:mm:ss"; "$ts $m" | Out-File -FilePath $logFile -Encoding utf8 -Append }
-function Confirm-Action($msg){ if($yes){ return $true } $r = Read-Host "$msg (y/N)"; return $r -match '^(y|Y|s|S)$' }
+. (Join-Path $PSScriptRoot "color_utils.ps1")
 
 $steps = @(
-    @{ name="build_requirements"; script="build_requirements.ps1" },
-    @{ name="rebuild_venv"; script="rebuild_venv.ps1" },
-    @{ name="validate_python"; script="validate_python.ps1" },
-    @{ name="validate_gmail_api"; script="validate_gmail_api.ps1" },
-    @{ name="validate_credentials"; script="validate_credentials.ps1" }
+    @{ Name = "init_project_structure"; Script = "init_project_structure.ps1"; Args = @() },
+    @{ Name = "check_python_version"; Script = "check_python_version.ps1"; Args = @() },
+    @{ Name = "check_pip"; Script = "check_pip.ps1"; Args = @() },
+    @{ Name = "rebuild_venv"; Script = "rebuild_venv.ps1"; Args = @("-Yes:$Yes") },
+    @{ Name = "validate_python"; Script = "validate_python.ps1"; Args = @() },
+    @{ Name = "validate_folders"; Script = "validate_folders.ps1"; Args = @() },
+    @{ Name = "validate_config"; Script = "validate_config.ps1"; Args = @() },
+    @{ Name = "validate_all"; Script = "validate_all.ps1"; Args = @() }
 )
 
-Write-Info "Root: $root"
-Log "start root=$root"
+try {
+    foreach ($step in $steps) {
+        $scriptPath = Join-Path $Root $step.Script
+        if (-not (Test-Path $scriptPath)) {
+            Write-Err "No existe script requerido: $($step.Script)"
+            exit 1
+        }
 
-if(-not (Confirm-Action "Ejecutar setup completo?")){
-    Write-Warn "Cancelado por el usuario"
-    Log "cancel"
-    return
-}
+        Write-Info "Ejecutando: $($step.Name)"
+        & $scriptPath -Root $Root
 
-$success = @()
-$fail = @()
-
-foreach($s in $steps){
-    $path = Join-Path $root $s.script
-    if(-not (Test-Path $path)){
-        Write-Err "No se encontro $($s.script)"
-        Log "missing $path"
-        $fail += $s.name
-        continue
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err "Falló paso: $($step.Name)"
+            exit 1
+        }
     }
-    try{
-        Write-Info "Ejecutando $($s.script)"
-        Log "run $path"
-        & $path -root $root -yes:$yes
-        $success += $s.name
-    } catch {
-        Write-Err "Fallo $($s.script): $_"
-        Log "error $path $_"
-        $fail += $s.name
-    }
+
+    Write-Info "Setup PINPON completado"
+    exit 0
 }
-
-Write-Host "--- Resumen ---" -ForegroundColor Cyan
-Write-Host "OK : $($success -join ', ')"
-Write-Host "BAD: $($fail -join ', ')"
-Log "success: $($success -join ',')"
-Log "fail: $($fail -join ',')"
-
-Write-Info "Fin de setup"
-Log "done"
+catch {
+    Write-Err "Error en setup_pinpon.ps1: $_"
+    exit 1
+}

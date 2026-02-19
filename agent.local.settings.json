@@ -1,0 +1,7 @@
+{
+  "agent": {
+    "configPath": "./agent_pinpon/agent.yaml",
+    "mode": "local",
+    "logLevel": "info"
+  }
+}

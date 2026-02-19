@@ -1,123 +1,117 @@
-# Finanzas
+# PINPON · Plataforma Financiera Modular
 
-[![Portal documental](https://img.shields.io/badge/Portal-Documentaci%C3%B3n-0A66C2?style=for-the-badge)](docs/INDEX_DOCUMENTACION.md)
-[![Versión estable](https://img.shields.io/badge/Versi%C3%B3n-v3-2EA043?style=for-the-badge)](docs/versions/LATEST_VERSION.txt)
-[![Automatización](https://img.shields.io/badge/Automatizaci%C3%B3n-Docs%20Script-6F42C1?style=for-the-badge)](docs/scripts/regenerar_documentacion.py)
-[![Changelog](https://img.shields.io/badge/Changelog-Documentaci%C3%B3n-F59E0B?style=for-the-badge)](docs/CHANGELOG_DOCUMENTACION.md)
-[![Licencia](https://img.shields.io/badge/Licencia-Pendiente-9CA3AF?style=for-the-badge)](docs/INDEX_DOCUMENTACION.md#-7-pr%C3%B3ximos-pasos-sugeridos)
+PINPON es un proyecto financiero modular integrado en el repositorio Finanzas, con automatización completa de validación, pruebas, build y despliegue mediante CI/CD.
 
-Plataforma modular para análisis documental (PDF/Excel), validación fiscal, descargas controladas y trazabilidad operativa.
+## Objetivos del proyecto
 
-## 1. Introducción
+- Mantener la rama principal siempre en estado verde.
+- Estandarizar setup, validación y mantenimiento.
+- Garantizar trazabilidad operativa y reproducibilidad.
+- Preparar despliegues controlados con rollback básico.
 
-Este repositorio implementa una arquitectura multiarchivo orientada a mantenibilidad, separación de responsabilidades y evolución incremental. Incluye integración con submódulo `PINPON` para flujo operativo complementario.
+## Estructura principal
 
-## 2. Arquitectura del sistema
+- `analysis/` análisis de documentos.
+- `config/` configuración y credenciales.
+- `core/` núcleo de ejecución.
+- `docs/` documentación técnica.
+- `pinpon_modules/` módulos funcionales.
+- `scripts/` scripts de mantenimiento CI/CD.
+- `tests/` pruebas automatizadas.
 
-Capas principales:
+## Setup rápido
 
-- **UI**: layout, navegación, componentes y mensajes.
-- **Core**: router, estado, ciclo de vida y bus de eventos.
-- **Analysis**: análisis de PDF/Excel, extracción de tablas y entidades.
-- **Validation**: RFC, folios, reglas SAT y homoclave.
-- **Downloads**: generación de descargas manuales y empaquetado.
-- **History**: auditoría y persistencia de acciones.
-- **Config**: constantes, entorno y parámetros globales.
-- **Utils**: utilidades compartidas para archivos, errores y formato.
+1. Inicializar estructura:
+   - `pwsh ./init_project_structure.ps1`
+2. Setup completo:
+   - `pwsh ./setup_pinpon.ps1 -Yes`
+3. Validación global:
+   - `pwsh ./validate_all.ps1`
+4. Pruebas:
+   - `pwsh ./scripts/run_tests.ps1`
 
-## 3. Características principales
+## Validadores soportados
 
-- Arquitectura modular orientada a dominio.
-- Flujo de datos controlado por `router` y `state_manager`.
-- Descargas exclusivamente manuales.
-- Documentación maestra multi-formato centralizada en `docs/`.
-- Integración de submódulo `PINPON` sin duplicar código.
+- `validate_python.ps1`
+- `validate_gmail_api.ps1`
+- `validate_credentials.ps1`
+- `validate_smtp.ps1`
+- `validate_gmail_pinpon.ps1`
+- `validate_folders.ps1`
+- `validate_config.ps1`
+- `validate_all.ps1`
 
-## 4. Portal documental
+### Claves de configuración requeridas
 
-- Índice principal: [docs/INDEX_DOCUMENTACION.md](docs/INDEX_DOCUMENTACION.md)
-- Prompt maestro total: [docs/PROMPT_MAESTRO_TOTAL_SISTEMA_DOCUMENTAL.txt](docs/PROMPT_MAESTRO_TOTAL_SISTEMA_DOCUMENTAL.txt)
+- `efirma_cer_path`
+- `efirma_key_path`
+- `efirma_password`
+- `gmail_address`
+- `gmail_app_password`
+- `sat_password`
+- `sat_rfc`
 
-## 5. Estructura del proyecto
+## CI/CD en PINPON
 
-```text
-app.py
-analysis/
-config/
-core/
-docs/
-downloads/
-history/
-ui/
-utils/
-validation/
-pinpon/ (submódulo)
-```
+### CI (`.github/workflows/ci.yml`)
 
-## 6. Cómo iniciar el proyecto
+Se ejecuta en:
 
-### Requisitos
+- `push` a cualquier rama.
+- `pull_request` a `main`.
 
-- Python 3.11+
-- Entorno virtual activo (`.venv`)
+Etapas:
 
-### Ejecución
+1. `build`
+2. `validate`
+3. `test`
+4. `security`
 
-```powershell
-& "./.venv/Scripts/python.exe" -m streamlit run app.py
-```
+### CD (`.github/workflows/cd.yml`)
 
-## 7. Cómo contribuir
+Se ejecuta cuando CI finaliza exitosamente para `main`.
 
-1. Crear cambios en rama de trabajo.
-2. Mantener consistencia de arquitectura y documentación.
-3. Si cambias el sistema documental, actualiza:
-	- [docs/INDEX_DOCUMENTACION.md](docs/INDEX_DOCUMENTACION.md)
-	- [docs/CHANGELOG_DOCUMENTACION.md](docs/CHANGELOG_DOCUMENTACION.md)
-4. Abrir PR con descripción de alcance e impacto.
+Etapas:
 
-### Integración de submódulo PINPON
+1. Build previo a release.
+2. Publicación de artefacto.
+3. Deploy placeholder.
+4. Rollback básico en caso de fallo.
 
-```powershell
-# Inicializar/actualizar submódulos
-git submodule update --init --recursive
+## Scripts de mantenimiento
 
-# Ejecutar scripts de PINPON desde Finanzas
-pwsh ./pinpon/<script>.ps1
-```
+- `scripts/build.ps1`
+- `scripts/run_all_validators.ps1`
+- `scripts/run_tests.ps1`
+- `scripts/deploy.ps1`
 
-## 8. Licencia
+## Generador de proyecto
 
-Pendiente de definición formal (`MIT` o `Privada`, según lineamiento del proyecto).
+`pinpon_new_project.ps1` permite crear desde cero una estructura PINPON completa con configuración base, scripts, documentación, pruebas y workflows.
 
-## 9. Auditoría en CI/CD
+## Pruebas automatizadas
 
-Ejecución recomendada de auditoría automática en pipeline:
+- `tests/test_validadores.py`
+- `tests/test_setup.py`
+- `tests/test_ci_cd.py`
 
-```powershell
-# 1) Generar auditoría + profiling en corrida actual
-& "./.venv/Scripts/python.exe" integrar_dropbox.py --audit-search --profiling --verbose
+Ejecución:
 
-# 2) Comparar snapshot anterior vs actual y fallar si hay degradación
-& "./.venv/Scripts/python.exe" -m dropbox_integration.audit_ci `
-	--snapshot-a "docs/versions/latest/dropbox/analytics/dropbox_search_audit_snapshot_prev.json" `
-	--snapshot-b "docs/versions/latest/dropbox/analytics/dropbox_search_audit_snapshot.json" `
-	--name-a "prev" --name-b "current" `
-	--out-dir "docs/reportes" `
-	--max-down-pct 35 `
-	--max-negative-delta-score 0.02
-```
+- `python -m pytest -q tests`
 
-El script `dropbox_integration/audit_ci.py` retorna `exit 0` si la política pasa y `exit 1` si detecta degradación por encima de umbral.
+## Documentación técnica
 
-## 10. Contacto o equipo
+- `docs/estructura.md`
+- `docs/validadores.md`
+- `docs/setup.md`
+- `docs/mantenimiento.md`
+- `docs/arquitectura.md`
+- `docs/ci_cd.md`
 
-Equipo de mantenimiento del repositorio `Finanzas` (owner y maintainers del proyecto).
+## Flujo recomendado de contribución
 
----
-
-Para lineamientos técnicos detallados, revisar también:
-
-- [docs/MANUAL_TECNICO.md](docs/MANUAL_TECNICO.md)
-- [docs/ROADMAP.md](docs/ROADMAP.md)
-- [docs/ARCHITECTURE_DIAGRAM.md](docs/ARCHITECTURE_DIAGRAM.md)
+1. Crear rama de trabajo.
+2. Ejecutar `validate_all.ps1` y pruebas.
+3. Abrir PR hacia `main`.
+4. Esperar CI en verde.
+5. Merge.

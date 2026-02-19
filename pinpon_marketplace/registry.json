@@ -1,0 +1,20 @@
+[
+  {
+    "id": "erp_compras",
+    "name": "Módulo de Compras (ERP)",
+    "repo": "https://github.com/kurtbrian03/pinpon-modulo-compras.git",
+    "description": "Gestión de proveedores, órdenes de compra y recepciones."
+  },
+  {
+    "id": "erp_ventas",
+    "name": "Módulo de Ventas (ERP)",
+    "repo": "https://github.com/kurtbrian03/pinpon-modulo-ventas.git",
+    "description": "Gestión de clientes, pedidos, facturación y cobranza."
+  },
+  {
+    "id": "erp_inventarios",
+    "name": "Módulo de Inventarios (ERP)",
+    "repo": "https://github.com/kurtbrian03/pinpon-modulo-inventarios.git",
+    "description": "Control de existencias, movimientos y trazabilidad de inventario."
+  }
+]

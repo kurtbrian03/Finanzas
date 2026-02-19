@@ -1,0 +1,56 @@
+{
+  "knowledge": {
+    "sources": [
+      {
+        "id": "pinpon-readme",
+        "type": "local_file",
+        "path": "./README.md",
+        "indexed": true,
+        "priority": "high"
+      },
+      {
+        "id": "pinpon-architecture",
+        "type": "local_file",
+        "path": "./docs/ARCHITECTURE_DIAGRAM.md",
+        "indexed": true,
+        "priority": "high"
+      },
+      {
+        "id": "pinpon-manual-tecnico",
+        "type": "local_file",
+        "path": "./docs/MANUAL_TECNICO.md",
+        "indexed": true,
+        "priority": "high"
+      },
+      {
+        "id": "pinpon-marketplace-mapping",
+        "type": "local_file",
+        "path": "./docs/dropbox_mapeo_documentos.md",
+        "indexed": true,
+        "priority": "medium"
+      },
+      {
+        "id": "pinpon-roadmap",
+        "type": "local_file",
+        "path": "./docs/ROADMAP.md",
+        "indexed": true,
+        "priority": "medium"
+      }
+    ],
+    "external_connections": [
+      {
+        "name": "github_api",
+        "enabled": true,
+        "endpoint": "https://api.github.com",
+        "auth_env": "GITHUB_TOKEN",
+        "optional": true
+      }
+    ],
+    "indexing": {
+      "strategy": "incremental",
+      "max_documents": 2000,
+      "chunk_size": 1200,
+      "chunk_overlap": 100
+    }
+  }
+}
