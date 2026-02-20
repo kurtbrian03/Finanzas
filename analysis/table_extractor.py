@@ -7,7 +7,7 @@ Responsabilidad:
 
 from __future__ import annotations
 
-import fitz
+import pymupdf as fitz
 import numpy as np
 import pandas as pd
 

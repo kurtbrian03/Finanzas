@@ -10,7 +10,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-import fitz
+import pymupdf as fitz
 import numpy as np
 import streamlit as st
 

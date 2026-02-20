@@ -5,7 +5,7 @@ from typing import Any
 import re
 
 try:
-    import fitz  # type: ignore
+    import pymupdf as fitz  # type: ignore
 except Exception:
     fitz = None
 

@@ -1,6 +1,6 @@
 # scripts/setup_agent_environment.ps1
 # Configura el entorno necesario para el agente declarativo PINPON:
-#   - Detecta/instala Node.js y npm
+#   - Detecta Node.js y npm (sin instalar automáticamente)
 #   - Crea archivos base del agente si no existen
 Write-Host "=== PINPON: Configuración del entorno del agente ===" -ForegroundColor Cyan
 
@@ -25,22 +25,17 @@ if ($npmVersion) {
     Write-Host "npm NO detectado." -ForegroundColor Red
 }
 
-# ── 2. Instalar Node.js si falta ──────────────────────────────────────────────
+# ── 2. Diagnóstico de prerequisitos (sin instalación automática) ──────────────
+Write-Host "`n[2/4] Validando prerequisitos (modo no-instalación)..." -ForegroundColor Yellow
 if (-not $nodeVersion) {
-    Write-Host "`n[2/4] Intentando instalar Node.js via winget..." -ForegroundColor Yellow
-    Try {
-        $winget = Get-Command winget -ErrorAction SilentlyContinue
-        if ($winget) {
-            winget install --id OpenJS.NodeJS.LTS --silent --accept-package-agreements --accept-source-agreements
-            Write-Host "Node.js instalado. Reinicia la terminal y vuelve a ejecutar el script." -ForegroundColor Green
-        } else {
-            Write-Host "winget no disponible. Descarga Node.js manualmente desde https://nodejs.org" -ForegroundColor Red
-        }
-    } Catch {
-        Write-Host "Error al intentar instalar Node.js: $_" -ForegroundColor Red
-    }
+    Write-Host "Node.js no está instalado. Instálalo manualmente desde https://nodejs.org o con tu gestor preferido." -ForegroundColor DarkYellow
 } else {
-    Write-Host "`n[2/4] Node.js ya instalado. Omitiendo instalación." -ForegroundColor DarkGray
+    Write-Host "Node.js presente. No se requiere acción." -ForegroundColor DarkGray
+}
+if (-not $npmVersion) {
+    Write-Host "npm no está disponible en PATH. Verifica instalación de Node.js y reinicia la terminal." -ForegroundColor DarkYellow
+} else {
+    Write-Host "npm presente. No se requiere acción." -ForegroundColor DarkGray
 }
 
 # ── 3. Crear archivos base del agente si no existen ──────────────────────────
@@ -106,6 +101,30 @@ if (-not (Test-Path $actionsDir)) {
     Write-Host "Directorio actions/ creado." -ForegroundColor Green
 } else {
     Write-Host "OK: actions/ ya existe." -ForegroundColor DarkGray
+}
+
+$instructionsPath = Join-Path $knowledgeDir "instructions.md"
+if (-not (Test-Path $instructionsPath)) {
+    @"
+# Instrucciones del agente PINPON
+
+Mantén respuestas en español, concisas y orientadas a validación documental.
+"@ | Set-Content -Path $instructionsPath -Encoding UTF8
+    Write-Host "Archivo knowledge/instructions.md creado." -ForegroundColor Green
+} else {
+    Write-Host "OK: knowledge/instructions.md ya existe." -ForegroundColor DarkGray
+}
+
+$actionsReadme = Join-Path $actionsDir "README.md"
+if (-not (Test-Path $actionsReadme)) {
+    @"
+# actions
+
+Define aquí acciones del agente declarativo PINPON.
+"@ | Set-Content -Path $actionsReadme -Encoding UTF8
+    Write-Host "Archivo actions/README.md creado." -ForegroundColor Green
+} else {
+    Write-Host "OK: actions/README.md ya existe." -ForegroundColor DarkGray
 }
 
 # ── 4. Resumen ────────────────────────────────────────────────────────────────

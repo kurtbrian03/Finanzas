@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import zipfile
 
-import fitz
+import pymupdf as fitz
 from openpyxl.chart import BarChart, Reference
 import pandas as pd
 

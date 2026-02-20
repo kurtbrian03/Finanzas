@@ -4,18 +4,37 @@
     {
       "label": "Pinpon: Unblock Installer and Setup Agent",
       "type": "shell",
-      "command": "powershell.exe",
+      "command": "pwsh",
       "args": [
         "-NoProfile",
         "-ExecutionPolicy",
         "Bypass",
-        "-Command",
-        "& { Start-Process pwsh -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\\\scripts\\\\unblock_and_setup_agent.ps1\"' -Verb RunAs }"
+        "-File",
+        "${workspaceFolder}\\scripts\\unblock_and_setup_agent.ps1"
       ],
       "presentation": {
         "echo": true,
         "reveal": "always",
         "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Pinpon: Open Orchestrator Menu",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "& .\\.venv\\Scripts\\python.exe -m streamlit run .\\app_menu.py"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
       },
       "problemMatcher": []
     }

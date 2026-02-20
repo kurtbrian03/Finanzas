@@ -4,7 +4,7 @@ from pathlib import Path
 from tkinter import BOTH, LEFT, RIGHT, Button, Frame, Label, Tk, filedialog
 
 try:
-    import fitz  # type: ignore
+    import pymupdf as fitz  # type: ignore
 except Exception:
     fitz = None
 

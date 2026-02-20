@@ -7,7 +7,7 @@ import re
 from typing import Any, cast
 import zipfile
 
-import fitz
+import pymupdf as fitz
 import pandas as pd
 from PIL import Image
 

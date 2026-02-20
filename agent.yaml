@@ -1,10 +1,9 @@
-# agent.yaml — Configuración del agente declarativo PINPON
-# Documentación: https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/
+# agent.yaml — configuración base del agente declarativo PINPON
 name: pinpon-agent
 description: Agente declarativo para análisis financiero y operativo PINPON
 version: "1.0.0"
 instructions: knowledge/instructions.md
 knowledge:
-  - knowledge/
+  - knowledge
 actions:
-  - actions/
+  - actions

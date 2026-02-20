@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 try:
-    import fitz  # type: ignore
+    import pymupdf as fitz  # type: ignore
 except Exception:
     fitz = None
 

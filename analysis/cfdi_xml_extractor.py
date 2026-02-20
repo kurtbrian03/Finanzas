@@ -8,7 +8,7 @@ from xml.etree import ElementTree as ET
 from dropbox_integration.content_extractor import extraer_contenido_archivo
 
 try:
-    import fitz  # type: ignore
+    import pymupdf as fitz  # type: ignore
 except Exception:
     fitz = None
 
